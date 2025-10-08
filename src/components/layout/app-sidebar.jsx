@@ -43,7 +43,7 @@ export default function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center gap-2">
           <AppLogo className="size-7 text-primary" />
-          <span className="text-lg font-semibold font-headline text-primary">SecureFlow</span>
+          <span className="text-lg font-semibold font-headline text-primary">CityFlow</span>
         </div>
       </SidebarHeader>
       <SidebarContent className="p-2">

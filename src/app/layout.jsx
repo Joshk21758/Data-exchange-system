@@ -2,7 +2,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata = {
-  title: 'SecureFlow',
+  title: 'CityFlow',
   description: 'Inter-ministry Data Exchange System',
 };
 

@@ -19,7 +19,7 @@ export default function LoginPage() {
           <div className="flex justify-center items-center mb-4">
              <AppLogo className="h-10 w-10 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-headline">SecureFlow</CardTitle>
+          <CardTitle className="text-2xl font-headline">CityFlow</CardTitle>
           <CardDescription>
             Enter your credentials to access the portal
           </CardDescription>
