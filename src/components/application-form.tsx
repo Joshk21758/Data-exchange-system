@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react";
 import { useEffect } from "react";
 import { AlertCircle, Bot, Check, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -27,7 +27,7 @@ function SubmitButton() {
 }
 
 export function ApplicationForm() {
-  const [state, formAction] = useFormState(routeApplicationAction, initialState);
+  const [state, formAction] = useActionState(routeApplicationAction, initialState);
   const { toast } = useToast();
 
   useEffect(() => {
