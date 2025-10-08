@@ -43,9 +43,6 @@ export default function ApplicationsPage() {
             Manage and track all document applications.
           </CardDescription>
         </div>
-        <Button asChild>
-          <Link href="/dashboard/applications/new">New Application</Link>
-        </Button>
       </CardHeader>
       <CardContent>
         <Table>
