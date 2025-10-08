@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import Link from 'next/link'; // Import Link
 
 export const metadata: Metadata = {
-  title: 'SecureFlow',
+  title: 'CityFlow',
   description: 'Inter-ministry Data Exchange System',
 };
 
@@ -21,7 +22,15 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        {children}
+        {/* Redirect base route to /login */}
+        {
+          process.env.NODE_ENV === 'production' && (
+            <noscript>
+              <meta http-equiv="refresh" content="0;url=/login" />
+            </noscript>
+          )
+        }
+        <main>{children}</main>
         <Toaster />
       </body>
     </html>
