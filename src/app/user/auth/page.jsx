@@ -55,7 +55,7 @@ export default function UserAuthPage() {
                     <Input id="password" type="password" required />
                   </div>
                   <Button asChild type="submit" className="w-full">
-                    <Link href="/dashboard">Login</Link>
+                    <Link href="/user/dashboard">Login</Link>
                   </Button>
                 </div>
               </CardContent>

@@ -23,7 +23,7 @@ export default function HomePage() {
            <p className="text-muted-foreground">Please select your login type.</p>
            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Button asChild size="lg">
-              <Link href="/login">User Login/Register</Link>
+              <Link href="/user/auth">User Login/Register</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
                <Link href="/admin">Admin Login</Link>
