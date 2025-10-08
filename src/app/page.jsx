@@ -16,7 +16,7 @@ export default function HomePage() {
         </CardHeader>
         <CardContent className="flex flex-col gap-4 pt-4">
             <Button asChild size="lg">
-              <Link href="/login">Login or Register</Link>
+              <Link href="/admin">Login or Register</Link>
             </Button>
         </CardContent>
       </Card>
