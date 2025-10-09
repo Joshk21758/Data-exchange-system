@@ -14,8 +14,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AppLogo } from '@/components/icons';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useActionState } from 'react';
 
 export default function UserAuthPage() {
+  const [state, isPending, action] = useActionState(undefined);
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
@@ -31,8 +33,9 @@ export default function UserAuthPage() {
           </TabsList>
           <TabsContent value="login">
             <Card>
+              <form>
               <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-headline">User Login</CardTitle>
+                <CardTitle className="text-3xl font-headline">User Login</CardTitle>
                 <CardDescription>
                   Enter your credentials to access your account
                 </CardDescription>
@@ -40,17 +43,17 @@ export default function UserAuthPage() {
               <CardContent>
                 <div className="grid gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label>Email</Label>
                     <Input
-                      id="email"
+                      name="email"
                       type="email"
                       placeholder="user@example.com"
-                      required
+                     
                     />
                   </div>
                   <div className="grid gap-2">
                     <div className="flex items-center justify-between">
-                      <Label htmlFor="password">Password</Label>
+                      <Label>Password</Label>
                        <Link
                         href="/forgot-password"
                         className="text-xs text-primary hover:underline"
@@ -58,19 +61,21 @@ export default function UserAuthPage() {
                         Forgot password?
                       </Link>
                     </div>
-                    <Input id="password" type="password" required />
+                    <Input type="password" placeholder="Enter your Password" name="password"/>
                   </div>
-                  <Button asChild type="submit" className="w-full">
+                  <Button className="w-full">
                     <Link href="/user/dashboard">Login</Link>
                   </Button>
                 </div>
               </CardContent>
+              </form>
             </Card>
           </TabsContent>
           <TabsContent value="register">
             <Card>
+              <form>
                <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-headline">Register</CardTitle>
+                <CardTitle className="text-3xl font-headline">Register</CardTitle>
                 <CardDescription>
                   Create a new user account
                 </CardDescription>
@@ -78,31 +83,32 @@ export default function UserAuthPage() {
               <CardContent>
                 <div className="grid gap-4">
                     <div className="grid gap-2">
-                        <Label htmlFor="name">Full Name</Label>
-                        <Input id="name" placeholder="John Doe" required />
+                        <Label >Full Name</Label>
+                        <Input type="text" placeholder="John Doe" name="fullName" />
                     </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="reg-email">Email</Label>
+                    <Label >Email</Label>
                     <Input
-                      id="reg-email"
+                      name="email"
                       type="email"
                       placeholder="user@example.com"
-                      required
+                     
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="reg-password">Password</Label>
-                    <Input id="reg-password" type="password" required />
+                    <Label>Password</Label>
+                    <Input  type="password" name="password" placeholder="Enter your Password" />
                   </div>
                    <div className="grid gap-2">
-                    <Label htmlFor="confirm-password">Confirm Password</Label>
-                    <Input id="confirm-password" type="password" required />
+                    <Label >Confirm Password</Label>
+                    <Input  type="password" name="confirmPassword" placeholder="Re-enter your Password" />
                   </div>
-                  <Button type="submit" className="w-full">
+                  <Button className="w-full">
                     Create Account
                   </Button>
                 </div>
               </CardContent>
+              </form>
             </Card>
           </TabsContent>
         </Tabs>
