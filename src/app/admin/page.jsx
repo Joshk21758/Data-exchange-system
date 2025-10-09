@@ -56,8 +56,14 @@ export default function AuthPage() {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <Label htmlFor="password">Password</Label>
+                      <Link
+                        href="#"
+                        className="text-xs text-primary hover:underline"
+                      >
+                        Forgot password?
+                      </Link>
                     </div>
                     <Input id="password" type="password" required defaultValue="password" />
                   </div>
