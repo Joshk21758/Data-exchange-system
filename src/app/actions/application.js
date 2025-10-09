@@ -17,12 +17,20 @@ export async function routeApplicationAction(
   formData
 ) {
   const applicationDescription = formData.get("applicationDescription");
+  const ministry = formData.get("ministry");
 
   if (!applicationDescription || applicationDescription.trim().length < 10) {
     return {
       ...prevState,
       error: "Please provide a detailed application description (at least 10 characters).",
     };
+  }
+
+  // If a ministry is selected, we bypass the AI routing.
+  if (ministry) {
+      // In a real application, you would save this to the database.
+      revalidatePath("/dashboard/applications/new");
+      return { department: ministry, reason: "Manual selection by user.", error: null };
   }
 
   try {
