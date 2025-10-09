@@ -26,6 +26,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { applicationsData } from "@/lib/data";
+import { DataRequestForm } from "@/components/data-request-form";
 
 const ministryApplications = applicationsData.filter(app => app.ministry === "Education");
 
@@ -93,6 +94,7 @@ export default function MinistryOfEducationPage() {
                             </Table>
                         </CardContent>
                     </Card>
+                    <DataRequestForm currentMinistry="Ministry of Education" />
                 </main>
             </div>
         </div>
