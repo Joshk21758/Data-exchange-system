@@ -28,7 +28,9 @@ export default function AuthPage() {
     <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         <div className="flex justify-center items-center mb-6">
-          <AppLogo className="h-12 w-12 text-primary" />
+          <Link href="/" className="flex items-center gap-2">
+            <AppLogo className="h-12 w-12 text-primary" />
+          </Link>
         </div>
         <Tabs defaultValue="login" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
@@ -59,7 +61,7 @@ export default function AuthPage() {
                     <div className="flex items-center justify-between">
                       <Label htmlFor="password">Password</Label>
                       <Link
-                        href="#"
+                        href="/forgot-password"
                         className="text-xs text-primary hover:underline"
                       >
                         Forgot password?

@@ -52,7 +52,7 @@ export default function UserAuthPage() {
                     <div className="flex items-center justify-between">
                       <Label htmlFor="password">Password</Label>
                        <Link
-                        href="#"
+                        href="/forgot-password"
                         className="text-xs text-primary hover:underline"
                       >
                         Forgot password?
