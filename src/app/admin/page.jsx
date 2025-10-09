@@ -14,14 +14,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AppLogo } from '@/components/icons';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-const ministries = [
-  "Ministry of Home Affairs",
-  "Ministry of Foreign Affairs",
-  "Ministry of Health",
-  "Ministry of Education",
-];
 
 export default function AuthPage() {
   return (
@@ -69,17 +61,6 @@ export default function AuthPage() {
                     </div>
                     <Input id="password" type="password" required defaultValue="password" />
                   </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="login-ministry">Ministry</Label>
-                    <Select>
-                        <SelectTrigger id="login-ministry">
-                            <SelectValue placeholder="Select a ministry" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {ministries.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-                        </SelectContent>
-                    </Select>
-                  </div>
                   <Button asChild type="submit" className="w-full">
                     <Link href="/dashboard">Login</Link>
                   </Button>
@@ -117,17 +98,6 @@ export default function AuthPage() {
                    <div className="grid gap-2">
                     <Label htmlFor="confirm-password">Confirm Password</Label>
                     <Input id="confirm-password" type="password" required />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="register-ministry">Ministry</Label>
-                    <Select>
-                        <SelectTrigger id="register-ministry">
-                            <SelectValue placeholder="Select a ministry" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {ministries.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-                        </SelectContent>
-                    </Select>
                   </div>
                   <Button type="submit" className="w-full">
                     Create Account
