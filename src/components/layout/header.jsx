@@ -6,7 +6,6 @@ import {
   History,
   Users,
   PanelLeft,
-  Landmark,
 } from "lucide-react";
 import {
   Breadcrumb,
@@ -58,13 +57,6 @@ export default function Header() {
             >
               <FileText className="h-5 w-5" />
               Applications
-            </Link>
-             <Link
-              href="/dashboard/ministries"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Landmark className="h-5 w-5" />
-              Ministries
             </Link>
             <Link
               href="/dashboard/audit-trail"
