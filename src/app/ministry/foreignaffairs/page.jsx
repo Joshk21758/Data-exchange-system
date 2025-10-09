@@ -1,12 +1,8 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import {
-    FileText,
-    Users,
-    Plane,
-    Building,
-} from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -15,32 +11,28 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import {
-    ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
-} from "@/components/ui/chart";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import { applicationsData } from "@/lib/data";
 
-const ministryStats = [
-    { title: "Embassies Worldwide", value: "180", icon: Building },
-    { title: "Visa Applications", value: "8,430", icon: FileText },
-    { title: "Citizens Abroad", value: "1,200,000", icon: Users },
-    { title: "Diplomatic Missions", value: "350", icon: Plane },
-];
+const ministryApplications = applicationsData.filter(app => app.ministry === "Foreign Affairs");
 
-const chartData = [
-  { month: "January", visas: 1200 },
-  { month: "February", visas: 1500 },
-  { month: "March", visas: 1100 },
-  { month: "April", visas: 1800 },
-  { month: "May", visas: 1600 },
-  { month: "June", visas: 1900 },
-];
-
-const chartConfig = {
-  visas: {
-    label: "Visas",
-    color: "hsl(var(--primary))",
-  },
+const statusVariantMap = {
+  Approved: "default",
+  Pending: "secondary",
+  Rejected: "destructive",
 };
 
 export default function MinistryOfForeignAffairsPage() {
@@ -48,46 +40,57 @@ export default function MinistryOfForeignAffairsPage() {
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
                 <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-                    <div className="grid gap-4 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
-                        {ministryStats.map((stat) => {
-                            const Icon = stat.icon;
-                            return (
-                                <Card key={stat.title}>
-                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                        <CardTitle className="text-sm font-medium">
-                                            {stat.title}
-                                        </CardTitle>
-                                        <Icon className="h-4 w-4 text-muted-foreground" />
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="text-2xl font-bold">{stat.value}</div>
-                                    </CardContent>
-                                </Card>
-                            );
-                        })}
-                    </div>
-                     <Card className="md:col-span-2 lg:col-span-4">
+                    <Card>
                         <CardHeader>
-                            <CardTitle>Ministry of Foreign Affairs - Monthly Visas</CardTitle>
+                            <CardTitle>Ministry of Foreign Affairs - Applications</CardTitle>
                             <CardDescription>
-                                Overview of visa applications.
+                                Review and manage document applications for this ministry.
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <ChartContainer config={chartConfig} className="h-[300px] w-full">
-                                <BarChart accessibilityLayer data={chartData}>
-                                    <CartesianGrid vertical={false} />
-                                    <XAxis
-                                        dataKey="month"
-                                        tickLine={false}
-                                        tickMargin={10}
-                                        axisLine={false}
-                                        tickFormatter={(value) => value.slice(0, 3)}
-                                    />
-                                    <ChartTooltip content={<ChartTooltipContent />} />
-                                    <Bar dataKey="visas" fill="var(--color-visas)" radius={4} />
-                                </BarChart>
-                            </ChartContainer>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Application ID</TableHead>
+                                        <TableHead>Type</TableHead>
+                                        <TableHead>Status</TableHead>
+                                        <TableHead>Submitted</TableHead>
+                                        <TableHead>
+                                            <span className="sr-only">Actions</span>
+                                        </TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {ministryApplications.map((app) => (
+                                    <TableRow key={app.id}>
+                                        <TableCell className="font-medium">{app.id}</TableCell>
+                                        <TableCell>{app.type}</TableCell>
+                                        <TableCell>
+                                        <Badge variant={statusVariantMap[app.status]}>
+                                            {app.status}
+                                        </Badge>
+                                        </TableCell>
+                                        <TableCell>{app.submitted}</TableCell>
+                                        <TableCell>
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                            <Button aria-haspopup="true" size="icon" variant="ghost">
+                                                <MoreHorizontal className="h-4 w-4" />
+                                                <span className="sr-only">Toggle menu</span>
+                                            </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end">
+                                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                            <DropdownMenuItem>View Details</DropdownMenuItem>
+                                            <DropdownMenuItem>Approve</DropdownMenuItem>
+                                            <DropdownMenuItem className="text-destructive">Reject</DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                        </TableCell>
+                                    </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
                         </CardContent>
                     </Card>
                 </main>
