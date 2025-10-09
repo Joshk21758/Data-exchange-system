@@ -6,6 +6,7 @@ import {
   History,
   Users,
   PanelLeft,
+  Landmark
 } from "lucide-react";
 import {
   Breadcrumb,
@@ -45,20 +46,6 @@ export default function Header() {
               <span className="sr-only">CityFlow</span>
             </Link>
             <Link
-              href="/dashboard"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Home className="h-5 w-5" />
-              Dashboard
-            </Link>
-            <Link
-              href="/dashboard/applications"
-              className="flex items-center gap-4 px-2.5 text-foreground"
-            >
-              <FileText className="h-5 w-5" />
-              Applications
-            </Link>
-            <Link
               href="/dashboard/audit-trail"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
@@ -71,6 +58,13 @@ export default function Header() {
             >
               <Users className="h-5 w-5" />
               Users
+            </Link>
+            <Link
+              href="/ministry"
+              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            >
+              <Landmark className="h-5 w-5" />
+              Ministries
             </Link>
           </nav>
         </SheetContent>

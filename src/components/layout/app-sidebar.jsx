@@ -10,19 +10,9 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { AppLogo } from "@/components/icons";
-import { FileText, History, LayoutDashboard, Users } from "lucide-react";
+import { History, Users, Landmark } from "lucide-react";
 
 const menuItems = [
-  {
-    href: "/dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    href: "/dashboard/applications",
-    label: "Applications",
-    icon: FileText,
-  },
   {
     href: "/dashboard/audit-trail",
     label: "Audit Trail",
@@ -32,6 +22,11 @@ const menuItems = [
     href: "/dashboard/users",
     label: "Users",
     icon: Users,
+  },
+  {
+    href: "/ministry",
+    label: "Ministries",
+    icon: Landmark,
   },
 ];
 
