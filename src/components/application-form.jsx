@@ -42,7 +42,10 @@ function SubmitButton() {
 }
 
 export function ApplicationForm() {
-  const [state, formAction] = useActionState(routeApplicationAction, initialState);
+  const [state, formAction] = useActionState(
+    routeApplicationAction,
+    initialState
+  );
   const { toast } = useToast();
   const [selectedMinistry, setSelectedMinistry] = useState("");
 
@@ -60,58 +63,50 @@ export function ApplicationForm() {
     <form action={formAction} className="grid gap-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="grid gap-3">
-          <Label htmlFor="applicantName">Applicant Name</Label>
+          <Label>Applicant Name</Label>
           <Input
-            id="applicantName"
-            name="applicantName"
             type="text"
-            defaultValue="John Doe"
+            name="appName"
+            placeholder="Enter your Full names"
           />
         </div>
         <div className="grid gap-3">
-            <Label htmlFor="nationalId">National ID</Label>
-            <Input
-            id="nationalId"
-            name="nationalId"
-            type="text"
-            placeholder="e.g., S1234567A"
-            />
+          <Label>National ID</Label>
+          <Input name="nationalId" type="text" placeholder="e.g., 230/987/6" />
         </div>
       </div>
-       <div className="grid gap-3">
-          <Label htmlFor="address">Address</Label>
-          <Textarea
-            id="address"
-            name="address"
-            placeholder="Enter your full address"
-            className="min-h-24"
-          />
-        </div>
+      <div className="grid gap-3">
+        <Label>Address</Label>
+        <Textarea
+          type="text"
+          name="address"
+          placeholder="Enter your full address"
+          className="min-h-24"
+        />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="grid gap-3">
-            <Label htmlFor="contactNumber">Contact Number</Label>
-            <Input
-            id="contactNumber"
+          <Label>Contact Number</Label>
+          <Input
             name="contactNumber"
             type="tel"
-            placeholder="e.g., +65 91234567"
-            />
+            placeholder="e.g., +265 9123 567"
+          />
         </div>
         <div className="grid gap-3">
-            <Label htmlFor="applicationType">Document Type</Label>
-            <Input
-            id="applicationType"
+          <Label>Document Type</Label>
+          <Input
             name="applicationType"
             type="text"
             placeholder="e.g., Passport Renewal, Visa Application"
-            />
+          />
         </div>
       </div>
-       <div className="grid gap-3">
-        <Label htmlFor="ministry">Select a Ministry (Optional)</Label>
+      <div className="grid gap-3">
+        <Label>Select a Ministry (Optional)</Label>
         <Select name="ministry" onValueChange={setSelectedMinistry}>
           <SelectTrigger>
-            <SelectValue placeholder="Let AI decide or select manually" />
+            <SelectValue placeholder="Select a ministry " />
           </SelectTrigger>
           <SelectContent>
             {ministries.map((ministry) => (
@@ -125,7 +120,7 @@ export function ApplicationForm() {
       <div className="grid gap-3">
         <Label htmlFor="applicationDescription">Application Description</Label>
         <Textarea
-          id="applicationDescription"
+          type="text"
           name="applicationDescription"
           placeholder="Provide a detailed description of the application, e.g., 'I am applying for a renewal of my passport which is expiring in 6 months. I am a citizen residing overseas.'"
           className="min-h-32"
@@ -133,9 +128,14 @@ export function ApplicationForm() {
       </div>
 
       {state.department && !selectedMinistry && (
-        <Alert variant="default" className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
-           <Bot className="h-4 w-4 !text-green-600 dark:!text-green-400" />
-          <AlertTitle className="text-green-800 dark:text-green-300">AI Routing Suggestion</AlertTitle>
+        <Alert
+          variant="default"
+          className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
+        >
+          <Bot className="h-4 w-4 !text-green-600 dark:!text-green-400" />
+          <AlertTitle className="text-green-800 dark:text-green-300">
+            AI Routing Suggestion
+          </AlertTitle>
           <AlertDescription className="text-green-700 dark:text-green-400">
             <p className="font-semibold">
               Suggested Department: {state.department}
@@ -148,7 +148,7 @@ export function ApplicationForm() {
       )}
 
       <div className="flex justify-end">
-        <SubmitButton />
+        <button className="w-full h-9 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90">Submit</button>
       </div>
     </form>
   );

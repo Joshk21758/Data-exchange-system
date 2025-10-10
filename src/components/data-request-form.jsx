@@ -32,86 +32,82 @@ export function DataRequestForm({ currentMinistry }) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Request User Data</CardTitle>
-        <CardDescription>
-          Request user information from another ministry.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="grid gap-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form>
+        <CardHeader>
+          <CardTitle>Request User Data</CardTitle>
+          <CardDescription>
+            Request user information from another ministry.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid gap-3">
+              <Label>Admin Name</Label>
+              <Input
+                name="adminName"
+                placeholder="Admin's full names"
+                defaultValue="Admin User"
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label>Department</Label>
+              <Input
+                type="text"
+                name="department"
+                placeholder="Name of working department"
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label>Phone Number</Label>
+              <Input
+                name="phoneNumber"
+                type="tel"
+                placeholder="e.g., +65 91234567"
+              />
+            </div>
+            <div className="grid gap-3">
+              <Label>Applicant Name</Label>
+              <Input type="text" name="appName" />
+            </div>
+          </div>
           <div className="grid gap-3">
-            <Label htmlFor="adminName">Admin Name</Label>
-            <Input
-              id="adminName"
-              name="adminName"
-              placeholder="e.g., John Doe"
-              defaultValue="Admin User"
+            <Label>Request From</Label>
+            <Select name="targetMinistry">
+              <SelectTrigger>
+                <SelectValue placeholder="Select a ministry" />
+              </SelectTrigger>
+              <SelectContent>
+                {otherMinistries.map((ministry) => (
+                  <SelectItem key={ministry} value={ministry}>
+                    {ministry}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="grid gap-3">
+            <Label htmlFor="dataRequested">Data Requested</Label>
+            <Textarea
+              name="dataRequested"
+              placeholder="e.g., Address History, Contact Information"
+              className="min-h-24"
             />
           </div>
           <div className="grid gap-3">
-            <Label htmlFor="department">Department</Label>
-            <Input
-              id="department"
-              name="department"
-              placeholder="e.g., Passport Division"
+            <Label>Reason for Request</Label>
+            <Textarea
+              name="reason"
+              placeholder="Provide a justification for this data request."
+              className="min-h-24"
             />
           </div>
-          <div className="grid gap-3">
-            <Label htmlFor="phoneNumber">Phone Number</Label>
-            <Input
-              id="phoneNumber"
-              name="phoneNumber"
-              type="tel"
-              placeholder="e.g., +65 91234567"
-            />
-          </div>
-          <div className="grid gap-3">
-            <Label htmlFor="userId">User ID / Email</Label>
-            <Input
-              id="userId"
-              name="userId"
-              placeholder="e.g., user@example.com or USR-123"
-            />
-          </div>
-        </div>
-        <div className="grid gap-3">
-          <Label htmlFor="targetMinistry">Request From</Label>
-          <Select name="targetMinistry">
-            <SelectTrigger>
-              <SelectValue placeholder="Select a ministry" />
-            </SelectTrigger>
-            <SelectContent>
-              {otherMinistries.map((ministry) => (
-                <SelectItem key={ministry} value={ministry}>
-                  {ministry}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="grid gap-3">
-          <Label htmlFor="dataRequested">Data Requested</Label>
-          <Textarea
-            id="dataRequested"
-            name="dataRequested"
-            placeholder="e.g., Address History, Contact Information"
-            className="min-h-24"
-          />
-        </div>
-        <div className="grid gap-3">
-          <Label htmlFor="reason">Reason for Request</Label>
-          <Textarea
-            id="reason"
-            name="reason"
-            placeholder="Provide a justification for this data request."
-            className="min-h-24"
-          />
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button>Submit Request</Button>
-      </CardFooter>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <button>
+            <Button>Submit Request</Button>
+          </button>
+        </CardFooter>
+      </form>
     </Card>
   );
 }

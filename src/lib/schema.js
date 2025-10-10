@@ -51,12 +51,12 @@ export const AdminRegisterSchema = z
 //UserApplicationForm
 export const UserApplicationSchema = z.object({
   appName: z.string().email().trim(),
-  docType: z.string().trim(),
-  selectMin: z.string().trim(),
+  nationalId: z.string().trim(),
   address: z.string().trim(),
-  nationid: z.string().trim(),
-  phone: z.string().min(13, {message: "Phone number must be at least 13 characters long"}),
-  appDes: z
+  contactNumber: z.string().trim(),
+  applicationType: z.string().trim(),
+  ministry: z.string().trim(),
+  applicationDescription: z
     .string()
     .trim()
     .min(10, { message: "Description must be at least 10 characters long" }),
@@ -64,17 +64,13 @@ export const UserApplicationSchema = z.object({
 
 //DataReuest schema
 export const DataRequestSchema = z.object({
-  email: z.string().trim(),
-  selectMin: z.string().trim(),
-  dataReq: z.string().trim().min(10, {message: "Description must be at least 10 characters long"}),
-  request: z.string().trim(),
-
+  adminName: z.string().trim(),
+  department: z.string().trim(),
+  phoneNumber: z.string().trim(),
+  appName: z.string().trim(),
+  targetMinistry: z.string(),
+  dataRequested: z.string().trim(),
+  reason: z.string().trim().min(20, {
+    message: "Reason for request must be at least 20 characters long",
+  }),
 });
-
-
-
-
-
-
-
-
