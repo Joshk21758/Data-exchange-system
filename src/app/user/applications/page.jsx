@@ -89,6 +89,7 @@ export default function UserApplicationsPage() {
                         <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem>View Details</DropdownMenuItem>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
                         <DropdownMenuItem>Cancel Application</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

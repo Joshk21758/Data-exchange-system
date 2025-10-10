@@ -53,6 +53,9 @@ export const UserApplicationSchema = z.object({
   appName: z.string().email().trim(),
   docType: z.string().trim(),
   selectMin: z.string().trim(),
+  address: z.string().trim(),
+  nationid: z.string().trim(),
+  phone: z.string().min(13, {message: "Phone number must be at least 13 characters long"}),
   appDes: z
     .string()
     .trim()
@@ -60,7 +63,7 @@ export const UserApplicationSchema = z.object({
 });
 
 //DataReuest schema
-export async function DataRequestSchema = z.object({
+export const DataRequestSchema = z.object({
   email: z.string().trim(),
   selectMin: z.string().trim(),
   dataReq: z.string().trim().min(10, {message: "Description must be at least 10 characters long"}),
@@ -68,7 +71,7 @@ export async function DataRequestSchema = z.object({
 
 });
 
-//
+
 
 
 
