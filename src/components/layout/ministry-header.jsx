@@ -34,7 +34,7 @@ export default function MinistryHeader() {
       <ThemeToggle />
       <Button variant="ghost" size="icon" className="rounded-full">
         <Bell className="h-5 w-5" />
-        <span className="sr-only">Toggle notifications</span>
+        <span className="">Toggle notifications</span>
       </Button>
       <UserNav />
     </header>

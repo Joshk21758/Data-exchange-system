@@ -10,7 +10,7 @@ import {
 
 export default function UserDashboardPage() {
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
+    <div className="flex w-full items-center justify-center">
         <Card className="w-full max-w-lg">
             <CardHeader>
                 <CardTitle>User Dashboard</CardTitle>

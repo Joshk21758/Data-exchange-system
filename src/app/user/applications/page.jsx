@@ -39,7 +39,7 @@ const userApplications = applicationsData.filter(app => ["APP-002", "APP-005"].i
 
 export default function UserApplicationsPage() {
   return (
-     <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
+     <div className="flex w-full items-center justify-center">
         <Card className="w-full max-w-4xl">
         <CardHeader className="flex flex-row justify-between items-center">
             <div>
