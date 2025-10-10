@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Bell } from "lucide-react";
+import { Bell, Users, History } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -28,6 +28,20 @@ export default function MinistryHeader() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+      <div className="flex items-center gap-4 ml-auto">
+        <Button variant="link" size="sm" asChild>
+            <Link href="/dashboard/users" className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                <span>Users</span>
+            </Link>
+        </Button>
+         <Button variant="link" size="sm" asChild>
+            <Link href="/dashboard/audit-trail" className="flex items-center gap-2">
+                <History className="h-4 w-4" />
+                <span>Audit Trail</span>
+            </Link>
+        </Button>
+      </div>
       <div className="relative ml-auto flex-1 md:grow-0">
         {/* Search could go here */}
       </div>

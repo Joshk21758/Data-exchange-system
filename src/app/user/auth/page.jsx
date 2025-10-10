@@ -67,9 +67,9 @@ export default function UserAuthPage() {
                         name="password"
                       />
                     </div>
-                    <Button className="w-full">
-                      <Link href="/user/dashboard">Login</Link>
-                    </Button>
+                    <button className="w-full h-9 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90">
+                      Login
+                    </button>
                   </div>
                 </CardContent>
               </form>
@@ -118,7 +118,9 @@ export default function UserAuthPage() {
                         placeholder="Re-enter your Password"
                       />
                     </div>
-                    <Button className="w-full">Create Account</Button>
+                    <button className="w-full h-9 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90">
+                      Create an Account
+                    </button>
                   </div>
                 </CardContent>
               </form>
