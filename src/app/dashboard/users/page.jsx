@@ -1,6 +1,6 @@
 "use client";
 
-import { MoreHorizontal, PlusCircle } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,12 +43,6 @@ export default function UsersPage() {
                         Assign roles and manage access control for administrators.
                     </CardDescription>
                 </div>
-                 <Button size="sm" className="gap-1">
-                    <PlusCircle className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                    Invite User
-                    </span>
-                </Button>
             </CardHeader>
             <CardContent>
                 <Table>
@@ -84,7 +78,6 @@ export default function UsersPage() {
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>Edit Role</DropdownMenuItem>
                                 <DropdownMenuItem className="text-destructive">Remove User</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
