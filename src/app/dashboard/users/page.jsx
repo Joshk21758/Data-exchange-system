@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,12 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuPortal
 } from "@/components/ui/dropdown-menu";
 import {
     Table,
@@ -32,6 +39,63 @@ const roleVariantMap = {
   "Officer": "secondary",
   "Auditor": "outline",
 };
+
+const roles = ["Super Admin", "Officer", "Auditor"];
+
+function UserRow({ user: initialUser }) {
+  const [user, setUser] = useState(initialUser);
+
+  const handleRoleChange = (newRole) => {
+    // In a real app, you'd call a server action here to update the user's role in the database.
+    // For this example, we'll just update the local state.
+    setUser({ ...user, role: newRole });
+  };
+
+  return (
+    <TableRow>
+      <TableCell className="font-medium">{user.name}</TableCell>
+      <TableCell>{user.email}</TableCell>
+      <TableCell>
+        <Badge variant={roleVariantMap[user.role] || "secondary"}>
+          {user.role}
+        </Badge>
+      </TableCell>
+      <TableCell>{user.ministry}</TableCell>
+      <TableCell>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button aria-haspopup="true" size="icon" variant="ghost">
+              <MoreHorizontal className="h-4 w-4" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Assign Role</DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  <DropdownMenuRadioGroup
+                    value={user.role}
+                    onValueChange={handleRoleChange}
+                  >
+                    {roles.map((role) => (
+                      <DropdownMenuRadioItem key={role} value={role}>
+                        {role}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+            <DropdownMenuItem className="text-destructive">Remove User</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </TableCell>
+    </TableRow>
+  );
+}
+
 
 export default function UsersPage() {
     return (
@@ -59,30 +123,7 @@ export default function UsersPage() {
                     </TableHeader>
                     <TableBody>
                         {usersData.map((user) => (
-                        <TableRow key={user.email}>
-                            <TableCell className="font-medium">{user.name}</TableCell>
-                            <TableCell>{user.email}</TableCell>
-                            <TableCell>
-                               <Badge variant={roleVariantMap[user.role] || "secondary"}>
-                                    {user.role}
-                                </Badge>
-                            </TableCell>
-                            <TableCell>{user.ministry}</TableCell>
-                            <TableCell>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                <Button aria-haspopup="true" size="icon" variant="ghost">
-                                    <MoreHorizontal className="h-4 w-4" />
-                                    <span className="sr-only">Toggle menu</span>
-                                </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem className="text-destructive">Remove User</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                            </TableCell>
-                        </TableRow>
+                          <UserRow key={user.email} user={user} />
                         ))}
                     </TableBody>
                 </Table>
