@@ -59,4 +59,19 @@ export const UserApplicationSchema = z.object({
     .min(10, { message: "Description must be at least 10 characters long" }),
 });
 
+//DataReuest schema
+export async function DataRequestSchema = z.object({
+  email: z.string().trim(),
+  selectMin: z.string().trim(),
+  dataReq: z.string().trim().min(10, {message: "Description must be at least 10 characters long"}),
+  request: z.string().trim(),
+
+});
+
+//
+
+
+
+
+
 

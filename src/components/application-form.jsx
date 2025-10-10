@@ -58,23 +58,45 @@ export function ApplicationForm() {
 
   return (
     <form action={formAction} className="grid gap-6">
-      <div className="grid gap-3">
-        <Label htmlFor="applicantName">Applicant Name</Label>
-        <Input
-          id="applicantName"
-          name="applicantName"
-          type="text"
-          defaultValue="John Doe"
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid gap-3">
+          <Label htmlFor="applicantName">Applicant Name</Label>
+          <Input
+            id="applicantName"
+            name="applicantName"
+            type="text"
+            defaultValue="John Doe"
+          />
+        </div>
+        <div className="grid gap-3">
+            <Label htmlFor="nationalId">National ID</Label>
+            <Input
+            id="nationalId"
+            name="nationalId"
+            type="text"
+            placeholder="e.g., S1234567A"
+            />
+        </div>
       </div>
-      <div className="grid gap-3">
-        <Label htmlFor="applicationType">Document Type</Label>
-        <Input
-          id="applicationType"
-          name="applicationType"
-          type="text"
-          placeholder="e.g., Passport Renewal, Visa Application"
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid gap-3">
+            <Label htmlFor="contactNumber">Contact Number</Label>
+            <Input
+            id="contactNumber"
+            name="contactNumber"
+            type="tel"
+            placeholder="e.g., +65 91234567"
+            />
+        </div>
+        <div className="grid gap-3">
+            <Label htmlFor="applicationType">Document Type</Label>
+            <Input
+            id="applicationType"
+            name="applicationType"
+            type="text"
+            placeholder="e.g., Passport Renewal, Visa Application"
+            />
+        </div>
       </div>
        <div className="grid gap-3">
         <Label htmlFor="ministry">Select a Ministry (Optional)</Label>
