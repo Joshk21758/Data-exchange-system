@@ -40,23 +40,40 @@ export function DataRequestForm({ currentMinistry }) {
       </CardHeader>
       <CardContent className="grid gap-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="grid gap-3">
+          <div className="grid gap-3">
             <Label htmlFor="adminName">Admin Name</Label>
             <Input
-                id="adminName"
-                name="adminName"
-                placeholder="e.g., John Doe"
-                defaultValue="Admin User"
+              id="adminName"
+              name="adminName"
+              placeholder="e.g., John Doe"
+              defaultValue="Admin User"
             />
-            </div>
-            <div className="grid gap-3">
+          </div>
+          <div className="grid gap-3">
+            <Label htmlFor="department">Department</Label>
+            <Input
+              id="department"
+              name="department"
+              placeholder="e.g., Passport Division"
+            />
+          </div>
+          <div className="grid gap-3">
+            <Label htmlFor="phoneNumber">Phone Number</Label>
+            <Input
+              id="phoneNumber"
+              name="phoneNumber"
+              type="tel"
+              placeholder="e.g., +65 91234567"
+            />
+          </div>
+          <div className="grid gap-3">
             <Label htmlFor="userId">User ID / Email</Label>
             <Input
-                id="userId"
-                name="userId"
-                placeholder="e.g., user@example.com or USR-123"
+              id="userId"
+              name="userId"
+              placeholder="e.g., user@example.com or USR-123"
             />
-            </div>
+          </div>
         </div>
         <div className="grid gap-3">
           <Label htmlFor="targetMinistry">Request From</Label>
