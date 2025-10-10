@@ -7,21 +7,28 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbSeparator,
+  BreadcrumbPage
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { UserNav } from "@/components/layout/user-nav";
 import { ThemeToggle } from "./theme-toggle";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function Header() {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-      {/* Breadcrumbs can be dynamically generated based on pathname in a real app */}
+      <SidebarTrigger className="md:hidden" />
       <Breadcrumb className="hidden md:flex">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/ministry">Ministries</Link>
+              <Link href="/dashboard/users">Dashboard</Link>
             </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+           <BreadcrumbItem>
+            <BreadcrumbPage>Users</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

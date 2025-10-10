@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
@@ -36,10 +37,10 @@ export default function AppSidebar() {
   return (
     <>
       <SidebarHeader>
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <AppLogo className="size-7 text-primary" />
           <span className="text-lg font-semibold font-headline text-primary">CityFlow</span>
-        </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent className="p-2">
         <SidebarMenu>
