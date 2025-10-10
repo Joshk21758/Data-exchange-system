@@ -78,6 +78,15 @@ export function ApplicationForm() {
             />
         </div>
       </div>
+       <div className="grid gap-3">
+          <Label htmlFor="address">Address</Label>
+          <Textarea
+            id="address"
+            name="address"
+            placeholder="Enter your full address"
+            className="min-h-24"
+          />
+        </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="grid gap-3">
             <Label htmlFor="contactNumber">Contact Number</Label>
