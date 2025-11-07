@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-const { SignJWT, jwtVerify } = require("jose");
+import { SignJWT, jwtVerify } from "jose";
 
 //check if secret key exists
 const secretKey = process.env.SESSION_SECRET;
