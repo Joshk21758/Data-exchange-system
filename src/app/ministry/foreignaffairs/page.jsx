@@ -57,7 +57,7 @@ export default async function MinistryOfForeignAffairsPage() {
                 <TableHead>Applicant name</TableHead>
                 <TableHead>Type</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Ministry</TableHead>
+                <TableHead>Description</TableHead>
                 <TableHead>Submitted</TableHead>
                 <TableHead>
                   <span className="sr-only">Actions</span>
@@ -70,7 +70,7 @@ export default async function MinistryOfForeignAffairsPage() {
                   <TableCell className="font-medium">{post.appName}</TableCell>
                   <TableCell>{post.applicationType}</TableCell>
                   <TableCell>{post.email}</TableCell>
-                  <TableCell>{post.ministry}</TableCell>
+                  <TableCell>{post.applicationDescription}</TableCell>
                   <TableCell>
                     {post._id.getTimestamp().toLocaleString()}
                   </TableCell>
