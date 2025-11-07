@@ -1,4 +1,3 @@
-import auditorAction from "@/app/actions/roles";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -69,36 +68,9 @@ export default async function UsersPage() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuLabel>Change Role</DropdownMenuLabel>
-                      <DropdownMenuItem>
-                        <form action={auditorAction}>
-                          <input
-                            type="hidden"
-                            name="userId"
-                            defaultValue={user._id.toString()}
-                          />
-                          <button>Auditor</button>
-                        </form>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <form>
-                          <input
-                            type="hidden"
-                            name="userId"
-                            defaultValue={user?._id.toString()}
-                          />
-                          <button>Security Analyst</button>
-                        </form>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <form>
-                          <input
-                            type="hidden"
-                            name="userId"
-                            defaultValue={user?._id.toString()}
-                          />
-                          <button>Super Admin</button>
-                        </form>
-                      </DropdownMenuItem>
+                      <DropdownMenuItem>Auditor</DropdownMenuItem>
+                      <DropdownMenuItem>Security Analyst</DropdownMenuItem>
+                      <DropdownMenuItem>Super Admin</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
