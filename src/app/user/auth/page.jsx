@@ -2,19 +2,11 @@
 
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
 import { AppLogo } from "@/components/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useActionState } from "react";
+import UserLoginForm from "@/components/user-login-form";
+import UserRegisterForm from "@/components/user-register-form";
 
 export default function UserAuthPage() {
   return (
@@ -32,98 +24,12 @@ export default function UserAuthPage() {
           </TabsList>
           <TabsContent value="login">
             <Card>
-              <form>
-                <CardHeader className="text-center">
-                  <CardTitle className="text-3xl font-headline">
-                    User Login
-                  </CardTitle>
-                  <CardDescription>
-                    Enter your credentials to access your account
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4">
-                    <div className="grid gap-2">
-                      <Label>Email</Label>
-                      <Input
-                        name="email"
-                        type="email"
-                        placeholder="user@example.com"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <div className="flex items-center justify-between">
-                        <Label>Password</Label>
-                        <Link
-                          href="/forgot-password"
-                          className="text-xs text-primary hover:underline"
-                        >
-                          Forgot password?
-                        </Link>
-                      </div>
-                      <Input
-                        type="password"
-                        placeholder="Enter your Password"
-                        name="password"
-                      />
-                    </div>
-                    <button className="w-full h-9 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90">
-                      Login
-                    </button>
-                  </div>
-                </CardContent>
-              </form>
+              <UserLoginForm />
             </Card>
           </TabsContent>
           <TabsContent value="register">
             <Card>
-              <form>
-                <CardHeader className="text-center">
-                  <CardTitle className="text-3xl font-headline">
-                    Register
-                  </CardTitle>
-                  <CardDescription>Create a new user account</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4">
-                    <div className="grid gap-2">
-                      <Label>Full Name</Label>
-                      <Input
-                        type="text"
-                        placeholder="John Doe"
-                        name="fullName"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label>Email</Label>
-                      <Input
-                        name="email"
-                        type="email"
-                        placeholder="user@example.com"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label>Password</Label>
-                      <Input
-                        type="password"
-                        name="password"
-                        placeholder="Enter your Password"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label>Confirm Password</Label>
-                      <Input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Re-enter your Password"
-                      />
-                    </div>
-                    <button className="w-full h-9 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90">
-                      Create an Account
-                    </button>
-                  </div>
-                </CardContent>
-              </form>
+              <UserRegisterForm />
             </Card>
           </TabsContent>
         </Tabs>

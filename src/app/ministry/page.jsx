@@ -1,13 +1,10 @@
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Landmark, Briefcase, HeartPulse, Home } from "lucide-react";
 import { AppLogo } from "@/components/icons";
+import SuccessMessage from "@/components/pop-up";
+import { Suspense } from "react";
+import Loading from "../Loading";
 
 const ministries = [
   {
@@ -63,10 +60,13 @@ export default function MinistryPage() {
             );
           })}
         </div>
-         <div className="mt-8">
-            <Link href="/" className="text-sm text-primary hover:underline">
-                Back to Home
-            </Link>
+        <div className="mt-8">
+          <Link href="/" className="text-sm text-primary hover:underline">
+            Back to Home
+          </Link>
+          <Suspense fallback={<Loading />}>
+            <SuccessMessage />
+          </Suspense>
         </div>
       </div>
     </div>

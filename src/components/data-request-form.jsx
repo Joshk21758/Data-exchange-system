@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { createRequestForm } from "@/app/actions/posts";
 import {
   Card,
   CardContent,
@@ -9,30 +9,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { useActionState } from "react";
 
-const ministries = [
-  "Ministry of Foreign Affairs",
-  "Ministry of Education",
-  "Ministry of Health",
-  "Ministry of Home Affairs",
-];
-
-export function DataRequestForm({ currentMinistry }) {
-  const otherMinistries = ministries.filter((m) => m !== currentMinistry);
+export default function DataRequestForm() {
+  const [state, action, isPending] = useActionState(
+    createRequestForm,
+    undefined
+  );
 
   return (
     <Card>
-      <form>
+      <form action={action}>
         <CardHeader>
           <CardTitle>Request User Data</CardTitle>
           <CardDescription>
@@ -43,68 +31,102 @@ export function DataRequestForm({ currentMinistry }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="grid gap-3">
               <Label>Admin Name</Label>
-              <Input
+              <input
+                type="text"
                 name="adminName"
                 placeholder="Admin's full names"
-                defaultValue="Admin User"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
               />
+              {state?.errors?.adminName && (
+                <p className="text-sm text-red-600">{state.errors.adminName}</p>
+              )}
             </div>
             <div className="grid gap-3">
               <Label>Department</Label>
-              <Input
+              <input
                 type="text"
                 name="department"
-                placeholder="Name of working department"
+                placeholder="Name of working department..."
+                className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
               />
+              {state?.errors?.department && (
+                <p className="text-sm text-red-600">
+                  {state.errors.department}
+                </p>
+              )}
             </div>
             <div className="grid gap-3">
-              <Label>Phone Number</Label>
-              <Input
-                name="phoneNumber"
-                type="tel"
-                placeholder="e.g., +65 91234567"
+              <Label>Email</Label>
+              <input
+                name="email"
+                type="text"
+                placeholder="Enter your email"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
               />
+              {state?.errors?.phoneNumber && (
+                <p className="text-sm text-red-600">
+                  {state.errors.phoneNumber}
+                </p>
+              )}
             </div>
             <div className="grid gap-3">
-              <Label>Applicant Name</Label>
-              <Input type="text" name="appName" />
+              <Label>User Applicants Name</Label>
+              <input
+                type="text"
+                name="appName"
+                placeholder="The name of person or user you're requesting data for.."
+                className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
+              />
+              {state?.errors?.appName && (
+                <p className="text-sm text-red-600">{state.errors.appName}</p>
+              )}
             </div>
           </div>
           <div className="grid gap-3">
             <Label>Request From</Label>
-            <Select name="targetMinistry">
-              <SelectTrigger>
-                <SelectValue placeholder="Select a ministry" />
-              </SelectTrigger>
-              <SelectContent>
-                {otherMinistries.map((ministry) => (
-                  <SelectItem key={ministry} value={ministry}>
-                    {ministry}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <input
+              type="text"
+              name="targetMinistry"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
+              placeholder="Select a Ministry, e.g., Ministry of Health"
+            />
+            {state?.errors?.targetMinistry && (
+              <p className="text-sm text-red-600">
+                {state.errors.targetMinistry}
+              </p>
+            )}
           </div>
           <div className="grid gap-3">
-            <Label htmlFor="dataRequested">Data Requested</Label>
-            <Textarea
+            <Label>Data Requested</Label>
+            <textarea
               name="dataRequested"
               placeholder="e.g., Address History, Contact Information"
-              className="min-h-24"
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
             />
+            {state?.errors?.dataRequested && (
+              <p className="text-sm text-red-600">
+                {state.errors.dataRequested}
+              </p>
+            )}
           </div>
           <div className="grid gap-3">
             <Label>Reason for Request</Label>
-            <Textarea
+            <textarea
               name="reason"
               placeholder="Provide a justification for this data request."
-              className="min-h-24"
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
             />
+            {state?.errors?.reason && (
+              <p className="text-sm text-red-600">{state.errors.reason}</p>
+            )}
           </div>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <button>
-            <Button>Submit Request</Button>
+          <button
+            disabled={isPending}
+            className="w-full h-9 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            {isPending ? "Submiting..." : "Submit Request Form"}
           </button>
         </CardFooter>
       </form>

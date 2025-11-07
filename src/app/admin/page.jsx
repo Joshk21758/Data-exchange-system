@@ -1,19 +1,12 @@
 "use client";
 
-import Link from 'next/link';
+import { Card } from "@/components/ui/card";
 
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { AppLogo } from '@/components/icons';
+import { AppLogo } from "@/components/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import AdminLoginForm from "@/components/admin-login-form";
+import AdminRegisterForm from "@/components/admin-register-form";
+import Link from "next/link";
 
 export default function AuthPage() {
   return (
@@ -31,79 +24,12 @@ export default function AuthPage() {
           </TabsList>
           <TabsContent value="login">
             <Card>
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-headline">Admin Login</CardTitle>
-                <CardDescription>
-                  Enter your credentials to access the admin portal
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
-                      required
-                      defaultValue="user@gov.sg"
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="password">Password</Label>
-                      <Link
-                        href="/forgot-password"
-                        className="text-xs text-primary hover:underline"
-                      >
-                        Forgot password?
-                      </Link>
-                    </div>
-                    <Input id="password" type="password" required defaultValue="password" />
-                  </div>
-                  <Button asChild type="submit" className="w-full">
-                    <Link href="/dashboard">Login</Link>
-                  </Button>
-                </div>
-              </CardContent>
+              <AdminLoginForm />
             </Card>
           </TabsContent>
           <TabsContent value="register">
             <Card>
-               <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-headline">Register Admin</CardTitle>
-                <CardDescription>
-                  Create a new administrator account
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4">
-                    <div className="grid gap-2">
-                        <Label htmlFor="name">Name</Label>
-                        <Input id="name" placeholder="Admin User" required />
-                    </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="reg-email">Email</Label>
-                    <Input
-                      id="reg-email"
-                      type="email"
-                      placeholder="m@example.com"
-                      required
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="reg-password">Password</Label>
-                    <Input id="reg-password" type="password" required />
-                  </div>
-                   <div className="grid gap-2">
-                    <Label htmlFor="confirm-password">Confirm Password</Label>
-                    <Input id="confirm-password" type="password" required />
-                  </div>
-                  <Button type="submit" className="w-full">
-                    Create Account
-                  </Button>
-                </div>
-              </CardContent>
+              <AdminRegisterForm />
             </Card>
           </TabsContent>
         </Tabs>

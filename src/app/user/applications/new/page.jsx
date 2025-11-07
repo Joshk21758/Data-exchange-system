@@ -6,8 +6,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ApplicationForm } from "@/components/application-form";
+import { createApplication } from "@/app/actions/posts";
 
-export default function NewUserApplicationPage() {
+export default function NewUserApplicationPage({ post } = {}) {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
       <div className="mx-auto grid max-w-4xl flex-1 auto-rows-max gap-4">
@@ -15,11 +16,11 @@ export default function NewUserApplicationPage() {
           <CardHeader>
             <CardTitle>New Document Application</CardTitle>
             <CardDescription>
-              Fill out the form below to apply for a new document. Our AI will suggest the appropriate ministry for you.
+              Fill out the form below to apply for a new document.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ApplicationForm />
+            <ApplicationForm handler={createApplication} post={post} />
           </CardContent>
         </Card>
       </div>

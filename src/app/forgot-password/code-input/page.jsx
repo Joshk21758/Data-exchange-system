@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-
-import { Button } from "@/components/ui/button";
+import { resetCodeAction } from "@/app/actions/posts";
+import { AppLogo } from "@/components/icons";
 import {
   Card,
   CardContent,
@@ -10,14 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { AppLogo } from "@/components/icons";
+import Link from "next/link";
 import { useActionState } from "react";
-import { sendResetCode } from "../actions/posts";
 
-export default function ForgotPasswordPage() {
+export default function CodePage() {
   const [state, isPending, formAction] = useActionState(
-    sendResetCode,
+    resetCodeAction,
     undefined
   );
   return (
@@ -31,20 +28,18 @@ export default function ForgotPasswordPage() {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-headline">
-              Forgot Password
+              Reset password
             </CardTitle>
             <CardDescription>
-              Enter your email, a code will be sent to reset your password.
+              Enter the code sent to your email below.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form className="grid gap-4" action={formAction}>
               <div className="grid gap-2">
-                <Label>Email</Label>
                 <input
-                  name="email"
-                  type="email"
-                  placeholder="myemail@example.com"
+                  name="code"
+                  type="text"
                   className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
                 />
               </div>
@@ -52,11 +47,8 @@ export default function ForgotPasswordPage() {
                 disabled={isPending}
                 className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
               >
-                {isPending ? "Sending..." : "Send Reset Code"}
+                {isPending ? "Verifying..." : "Verify Code"}
               </button>
-              <Button variant="link" asChild className="mt-2">
-                <Link href="/user/auth">Back to Login</Link>
-              </Button>
             </form>
           </CardContent>
         </Card>

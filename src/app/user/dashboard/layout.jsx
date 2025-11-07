@@ -1,8 +1,6 @@
 import UserHeader from "@/components/layout/user-header";
 
-export default function UserPagesLayout({
-  children,
-}) {
+export default function UserPagesLayout({ children }) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <UserHeader />

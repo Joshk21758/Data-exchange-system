@@ -1,154 +1,113 @@
 "use client";
 
 import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
-import { useEffect, useState } from "react";
-import { Bot } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { routeApplicationAction } from "@/app/actions/application";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-const initialState = {
-  department: null,
-  reason: null,
-  error: null,
-};
-
-const ministries = [
-  "Ministry of Home Affairs",
-  "Ministry of Foreign Affairs",
-  "Ministry of Health",
-  "Ministry of Education",
-];
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" disabled={pending}>
-      {pending ? "Submitting..." : "Submit Application"}
-    </Button>
-  );
-}
-
-export function ApplicationForm() {
-  const [state, formAction] = useActionState(
-    routeApplicationAction,
-    initialState
-  );
-  const { toast } = useToast();
-  const [selectedMinistry, setSelectedMinistry] = useState("");
-
-  useEffect(() => {
-    if (state.error) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: state.error,
-      });
-    }
-  }, [state.error, toast]);
+export function ApplicationForm({ handler, post }) {
+  const [state, formAction, isPending] = useActionState(handler, undefined);
 
   return (
     <form action={formAction} className="grid gap-6">
+      <input type="hidden" name="postId" defaultValue={post?._id.toString()} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="grid gap-3">
           <Label>Applicant Name</Label>
-          <Input
+          <input
             type="text"
             name="appName"
             placeholder="Enter your Full names"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
           />
+          {state?.errors?.appName && (
+            <p className="text-sm text-red-600">{state.errors.appName}</p>
+          )}
         </div>
         <div className="grid gap-3">
           <Label>National ID</Label>
-          <Input name="nationalId" type="text" placeholder="e.g., 230/987/6" />
+          <input
+            name="nationalId"
+            type="text"
+            placeholder="e.g., 230/987/6"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
+          />
+          {state?.errors?.nationalId && (
+            <p className="text-sm text-red-600">{state.errors.nationalId}</p>
+          )}
         </div>
       </div>
       <div className="grid gap-3">
         <Label>Address</Label>
-        <Textarea
+        <textarea
           type="text"
           name="address"
           placeholder="Enter your full address"
-          className="min-h-24"
+          className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
         />
+        {state?.errors?.address && (
+          <p className="text-sm text-red-600">{state.errors.address}</p>
+        )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="grid gap-3">
-          <Label>Contact Number</Label>
-          <Input
-            name="contactNumber"
-            type="tel"
-            placeholder="e.g., +265 9123 567"
+          <Label>Email</Label>
+          <input
+            name="email"
+            type="text"
+            placeholder="youremail@gmail.com"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
           />
+          {state?.errors?.email && (
+            <p className="text-sm text-red-600">{state.errors.email}</p>
+          )}
         </div>
         <div className="grid gap-3">
           <Label>Document Type</Label>
-          <Input
+          <input
             name="applicationType"
             type="text"
             placeholder="e.g., Passport Renewal, Visa Application"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
           />
+          {state?.errors?.applicationType && (
+            <p className="text-sm text-red-600">
+              {state.errors.applicationType}
+            </p>
+          )}
         </div>
       </div>
       <div className="grid gap-3">
         <Label>Select a Ministry (Optional)</Label>
-        <Select name="ministry" onValueChange={setSelectedMinistry}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select a ministry " />
-          </SelectTrigger>
-          <SelectContent>
-            {ministries.map((ministry) => (
-              <SelectItem key={ministry} value={ministry}>
-                {ministry}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <input
+          name="ministry"
+          type="text"
+          placeholder="Select a Ministry"
+          className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 flex cursor-default items-center justify-center py-1"
+        />
+        {state?.errors?.ministry && (
+          <p className="text-sm text-red-600">{state.errors.ministry}</p>
+        )}
       </div>
       <div className="grid gap-3">
-        <Label htmlFor="applicationDescription">Application Description</Label>
-        <Textarea
+        <Label>Application Description</Label>
+        <textarea
           type="text"
           name="applicationDescription"
           placeholder="Provide a detailed description of the application, e.g., 'I am applying for a renewal of my passport which is expiring in 6 months. I am a citizen residing overseas.'"
-          className="min-h-32"
+          className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
         />
+        {state?.errors?.applicationDescription && (
+          <p className="text-sm text-red-600">
+            {state.errors.applicationDescription}
+          </p>
+        )}
       </div>
-
-      {state.department && !selectedMinistry && (
-        <Alert
-          variant="default"
-          className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
-        >
-          <Bot className="h-4 w-4 !text-green-600 dark:!text-green-400" />
-          <AlertTitle className="text-green-800 dark:text-green-300">
-            AI Routing Suggestion
-          </AlertTitle>
-          <AlertDescription className="text-green-700 dark:text-green-400">
-            <p className="font-semibold">
-              Suggested Department: {state.department}
-            </p>
-            <p className="text-xs mt-1">
-              <strong>Reasoning:</strong> {state.reason}
-            </p>
-          </AlertDescription>
-        </Alert>
-      )}
-
       <div className="flex justify-end">
-        <button className="w-full h-9 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90">Submit</button>
+        <button
+          disabled={isPending}
+          className="w-full h-9 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90"
+        >
+          {isPending ? "Submiting..." : "Submit Application"}
+        </button>
       </div>
     </form>
   );

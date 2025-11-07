@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { MoreHorizontal } from "lucide-react";
-
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,81 +23,108 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { applicationsData } from "@/lib/data";
+import { getCollection } from "@/lib/db";
+import { deleteApplication } from "@/app/actions/posts";
+import SuccessMessage from "@/components/pop-up";
+import { Suspense } from "react";
+import Loading from "@/app/Loading";
 
-const statusVariantMap = {
-  Approved: "default",
-  Pending: "secondary",
-  Rejected: "destructive",
-};
+export default async function UserApplicationsPage() {
+  //get application collection
+  const applicationCollection = await getCollection("applications");
+  const posts = await applicationCollection
+    .find()
+    .sort({ $natural: -1 })
+    .toArray();
 
-// Filter to show only a subset of applications for a "logged in" user.
-const userApplications = applicationsData.filter(app => ["APP-002", "APP-005"].includes(app.id));
-
-
-export default function UserApplicationsPage() {
   return (
-     <div className="flex w-full items-center justify-center">
-        <Card className="w-full max-w-4xl">
+    <div className="flex w-full items-center justify-center">
+      <Card className="w-full max-w-4xl">
         <CardHeader className="flex flex-row justify-between items-center">
-            <div>
+          <div>
             <CardTitle>My Applications</CardTitle>
             <CardDescription>
-                Track the status of your document applications.
+              Track the status of your document applications.
             </CardDescription>
-            </div>
-            <Button asChild>
-                <Link href="/user/applications/new">New Application</Link>
-            </Button>
+          </div>
+          <Button asChild>
+            <Link href="/user/applications/new">New Application</Link>
+          </Button>
         </CardHeader>
         <CardContent>
-            <Table>
+          <Table>
             <TableHeader>
-                <TableRow>
-                <TableHead>Application ID</TableHead>
+              <TableRow>
+                <TableHead>Applicant name</TableHead>
                 <TableHead>Type</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>Email</TableHead>
                 <TableHead>Ministry</TableHead>
                 <TableHead>Submitted</TableHead>
                 <TableHead>
-                    <span className="sr-only">Actions</span>
+                  <span className="sr-only">Actions</span>
                 </TableHead>
-                </TableRow>
+              </TableRow>
             </TableHeader>
             <TableBody>
-                {userApplications.map((app) => (
-                <TableRow key={app.id}>
-                    <TableCell className="font-medium">{app.id}</TableCell>
-                    <TableCell>{app.type}</TableCell>
-                    <TableCell>
-                    <Badge variant={statusVariantMap[app.status]}>
-                        {app.status}
-                    </Badge>
-                    </TableCell>
-                    <TableCell>{app.ministry}</TableCell>
-                    <TableCell>{app.submitted}</TableCell>
-                    <TableCell>
+              {posts.map((post) => (
+                <TableRow key={post._id}>
+                  <TableCell>{post.appName}</TableCell>
+                  <TableCell>{post.applicationType}</TableCell>
+                  <TableCell>{post.email}</TableCell>
+                  <TableCell>{post.ministry}</TableCell>
+                  <TableCell>
+                    {post._id.getTimestamp().toLocaleString()}
+                  </TableCell>
+                  <TableCell>
                     <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                        <Button aria-haspopup="true" size="icon" variant="ghost">
-                            <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Toggle menu</span>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          aria-haspopup="true"
+                          size="icon"
+                          variant="ghost"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Toggle menu</span>
                         </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Cancel Application</DropdownMenuItem>
-                        </DropdownMenuContent>
+                        <DropdownMenuItem>
+                          <Link
+                            href={`/user/applications/show/${post?._id.toString()}`}
+                          >
+                            View Details
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link
+                            href={`/user/applications/edit/${post?._id.toString()}`}
+                          >
+                            Edit
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <form action={deleteApplication}>
+                            <input
+                              type="hidden"
+                              name="postId"
+                              defaultValue={post?._id.toString()}
+                            />
+                            <button>Cancel Application</button>
+                          </form>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
                     </DropdownMenu>
-                    </TableCell>
+                  </TableCell>
                 </TableRow>
-                ))}
+              ))}
             </TableBody>
-            </Table>
+          </Table>
         </CardContent>
-        </Card>
+      </Card>
+      <Suspense fallback={<Loading />}>
+        <SuccessMessage />
+      </Suspense>
     </div>
   );
 }

@@ -36,6 +36,7 @@ export const AdminLoginSchema = z.object({
 export const AdminRegisterSchema = z
   .object({
     name: z.string().trim(),
+    role: z.string().trim(),
     email: z.string().email().trim(),
     password: z
       .string()
@@ -50,12 +51,12 @@ export const AdminRegisterSchema = z
 
 //UserApplicationForm
 export const UserApplicationSchema = z.object({
-  appName: z.string().email().trim(),
+  appName: z.string().trim(),
   nationalId: z.string().trim(),
   address: z.string().trim(),
-  contactNumber: z.string().trim(),
+  email: z.string(),
   applicationType: z.string().trim(),
-  ministry: z.string().trim(),
+  ministry: z.string(),
   applicationDescription: z
     .string()
     .trim()
@@ -64,13 +65,40 @@ export const UserApplicationSchema = z.object({
 
 //DataReuest schema
 export const DataRequestSchema = z.object({
-  adminName: z.string().trim(),
+  adminName: z.string(),
   department: z.string().trim(),
-  phoneNumber: z.string().trim(),
+  email: z.string().trim(),
   appName: z.string().trim(),
-  targetMinistry: z.string(),
+  targetMinistry: z.string().trim(),
   dataRequested: z.string().trim(),
-  reason: z.string().trim().min(20, {
-    message: "Reason for request must be at least 20 characters long",
-  }),
+  reason: z
+    .string()
+    .min(20, {
+      message: "Reason for request must be at least 20 characters long",
+    })
+    .trim(),
 });
+
+//ForgotPassword schema
+export const ForgotPasswordSchema = z.object({
+  email: z.string().trim(),
+});
+
+//CodeReset schema
+export const CodeResetSchema = z.object({
+  code: z.number().min(6, { message: "Code must be 6 Digits long!" }),
+});
+
+//NewPassword schema
+export const NewPasswordSchema = z
+  .object({
+    newPass: z
+      .string()
+      .trim()
+      .min(8, { message: "Password must be atleast 8 characters long" }),
+    confirmPassword: z.string().trim(),
+  })
+  .refine((val) => val.newPass === val.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });

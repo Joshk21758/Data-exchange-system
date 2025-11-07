@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96.1%;
+    --background: 0 1% 90%;
     --foreground: 222.2 47.4% 11.2%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
@@ -66,4 +66,17 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.border-class {
+  height: 600px;
+  width: 650px;
+  border-radius: 30px;
+  margin-left: 40px;
+  box-shadow: 2px 4px 4px rgb(2, 115, 244);
+  margin-top: 30px;
+  padding-left: 15px;
+  padding-top: 10px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
 }

@@ -30,26 +30,16 @@ export default function MinistryHeader() {
       </Breadcrumb>
       <div className="flex items-center gap-4 ml-auto">
         <Button variant="link" size="sm" asChild>
-            <Link href="/dashboard/users" className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                <span>Users</span>
-            </Link>
-        </Button>
-         <Button variant="link" size="sm" asChild>
-            <Link href="/dashboard/audit-trail" className="flex items-center gap-2">
-                <History className="h-4 w-4" />
-                <span>Audit Trail</span>
-            </Link>
+          <Link href="/dashboard/users" className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            <span>Users</span>
+          </Link>
         </Button>
       </div>
       <div className="relative ml-auto flex-1 md:grow-0">
         {/* Search could go here */}
       </div>
       <ThemeToggle />
-      <Button variant="ghost" size="icon" className="rounded-full">
-        <Bell className="h-5 w-5" />
-        <span className="sr-only">Toggle notifications</span>
-      </Button>
       <UserNav />
     </header>
   );
