@@ -371,38 +371,7 @@ export async function createRequestForm(state, formData) {
 }
 
 //Approve server action
-export async function approve({
-  to,
-  postId,
-  subject,
-  text,
-  html,
-  redirectTo,
-} = {}) {
-  // If a postId is provided and no explicit `to`, resolve the applicant email
-  // from the central `applications` collection (used by the user applications dashboard).
-  if (!to && postId) {
-    try {
-      if (ObjectId.isValid(postId)) {
-        const applicationsCollection = await getCollection("applications");
-        const applicationObjectId = ObjectId.createFromHexString(postId);
-        const application = await applicationsCollection.findOne({
-          _id: applicationObjectId,
-        });
-        if (application && application.email) {
-          to = application.email;
-        }
-      } else {
-        console.warn(
-          "approve: invalid postId provided, cannot resolve applicant email",
-          postId
-        );
-      }
-    } catch (err) {
-      console.warn("approve: failed to lookup application email", err);
-    }
-  }
-
+export async function approve({ to, subject, text, html, redirectTo } = {}) {
   // Create transporter using environment variables
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -414,9 +383,13 @@ export async function approve({
     },
   });
 
+  //get application collection
+  const applicationCollection = await getCollection("applications");
+  const emailField = applicationCollection.findOne({ email });
+
   const mailOptions = {
     from: process.env.EMAIL_FROM || process.env.SMTP_USER,
-    to,
+    to: to || emailField,
     subject: subject || "Your application has been approved",
     text:
       text ||
@@ -446,70 +419,12 @@ export async function approve({
 
     return { ok: true, info };
   } catch (err) {
-    console.error("sendEmail error:", err);
-    return { ok: false, error: String(err) };
+    console.error("sendEmail error:");
   }
 }
 
 //Reject server action
-export async function reject({
-  to,
-  postId,
-  subject,
-  text,
-  html,
-  redirectTo,
-} = {}) {
-  // Try to resolve recipient from central `applications` collection first when postId provided
-  if (!to && postId) {
-    try {
-      if (ObjectId.isValid(postId)) {
-        const applicationsCollection = await getCollection("applications");
-        const applicationObjectId = ObjectId.createFromHexString(postId);
-        const application = await applicationsCollection.findOne({
-          _id: applicationObjectId,
-        });
-        if (application && application.email) {
-          to = application.email;
-        }
-      } else {
-        console.warn(
-          "reject: invalid postId provided, cannot resolve applicant email",
-          postId
-        );
-      }
-    } catch (err) {
-      console.warn("reject: failed to lookup application email", err);
-    }
-  }
-
-  // Fallback: check ministry-specific collections if central lookup didn't find an email
-  if (!to && postId && ObjectId.isValid(postId)) {
-    const ministryCollections = [
-      "home-affairs-collection",
-      "foreign-affairs-collection",
-      "health-collection",
-      "education-collection",
-    ];
-    try {
-      const applicationObjectId = ObjectId.createFromHexString(postId);
-      for (const colName of ministryCollections) {
-        try {
-          const col = await getCollection(colName);
-          if (!col) continue;
-          const doc = await col.findOne({ _id: applicationObjectId });
-          if (doc && doc.email) {
-            to = doc.email;
-            break;
-          }
-        } catch (e) {
-          // ignore per-collection errors and continue
-        }
-      }
-    } catch (e) {
-      console.warn("reject: ministry fallback lookup failed", e);
-    }
-  }
+export async function reject({ to, subject, text, html, redirectTo } = {}) {
   // Create transporter using environment variables
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -521,9 +436,13 @@ export async function reject({
     },
   });
 
+  //get application collection
+  const applicationCollection = await getCollection("applications");
+  const emailField = applicationCollection.findOne({ email });
+
   const mailOptions = {
     from: process.env.EMAIL_FROM || process.env.SMTP_USER,
-    to,
+    to: to || emailField,
     subject: subject || "Your application has been rejected",
     text:
       text ||
@@ -554,7 +473,6 @@ export async function reject({
     return { ok: true, info };
   } catch (err) {
     console.error("sendEmail error:", err);
-    return { ok: false, error: String(err) };
   }
 }
 
