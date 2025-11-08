@@ -27,6 +27,7 @@ export async function createApplication(state, formData) {
   const email = formData.get("email");
   const applicationType = formData.get("applicationType");
   const ministry = formData.get("ministry");
+  const applicationDescription = formData.get("applicationDescription");
 
   const validatedFields = UserApplicationSchema.safeParse({
     appName,

@@ -56,7 +56,7 @@ export const UserApplicationSchema = z.object({
   address: z.string().trim(),
   email: z.string(),
   applicationType: z.string().trim(),
-  ministry: z.string(),
+  ministry: z.string().trim(),
   applicationDescription: z
     .string()
     .trim()
