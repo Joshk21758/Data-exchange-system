@@ -356,7 +356,9 @@ export async function approve({ to, subject, text, html, redirectTo } = {}) {
 
   //get application collection
   const applicationCollection = await getCollection("applications");
-  const emailField = applicationCollection.findOne({ email });
+  const emailField = applicationCollection.findOne({
+    email: String(to).trim(),
+  });
 
   const mailOptions = {
     from: process.env.EMAIL_FROM || process.env.SMTP_USER,
@@ -409,7 +411,9 @@ export async function reject({ to, subject, text, html, redirectTo } = {}) {
 
   //get application collection
   const applicationCollection = await getCollection("applications");
-  const emailField = applicationCollection.findOne({ email });
+  const emailField = applicationCollection.findOne({
+    email: String(to).trim(),
+  });
 
   const mailOptions = {
     from: process.env.EMAIL_FROM || process.env.SMTP_USER,
@@ -449,8 +453,6 @@ export async function reject({ to, subject, text, html, redirectTo } = {}) {
 
 //Forgot password server action
 export async function sendResetCode({ to, subject, text, html }) {
-  if (!to) throw new Error("Missing to address");
-
   // Generate a random 6-digit numeric reset code
   const resetCode = String(Math.floor(100000 + Math.random() * 900000));
 
@@ -465,9 +467,13 @@ export async function sendResetCode({ to, subject, text, html }) {
     },
   });
 
+  //get user collection
+  const userCollection = await getCollection("user");
+  const emailField = userCollection.findOne({ email: String(to).trim() });
+
   const mailOptions = {
     from: process.env.EMAIL_FROM || process.env.SMTP_USER,
-    to,
+    to: to || emailField,
     subject: subject || "Password Reset Code",
     text: text || `Your password reset code is: ${resetCode}`,
     html:
@@ -481,8 +487,7 @@ export async function sendResetCode({ to, subject, text, html }) {
     // return the generated code so callers can persist/verify it when needed
     return { ok: true, info, code: resetCode };
   } catch (err) {
-    console.error("sendEmail error:", err);
-    return { ok: false, error: String(err) };
+    console.error("sendEmail error:");
   }
 }
 
