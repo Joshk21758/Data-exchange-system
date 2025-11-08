@@ -83,15 +83,9 @@ export default async function MinistryOfHealthPage() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
-                          <form action={approve}>
-                            <button>Approve</button>
-                          </form>
-                        </DropdownMenuItem>
+                        <DropdownMenuItem>Approve</DropdownMenuItem>
                         <DropdownMenuItem className="text-destructive">
-                          <form action={reject}>
-                            <button>Reject</button>
-                          </form>
+                          Reject
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
