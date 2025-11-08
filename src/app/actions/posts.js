@@ -29,35 +29,6 @@ export async function createApplication(state, formData) {
   const applicationType = formData.get("applicationType");
   const ministry = formData.get("ministry");
 
-  // Fallback: if central lookup didn't find an email, check known ministry collections
-  if (!to && postId && ObjectId.isValid(postId)) {
-    const ministryCollections = [
-      "home-affairs-collection",
-      "foreign-affairs-collection",
-      "health-collection",
-      "education-collection",
-    ];
-    try {
-      const applicationObjectId = ObjectId.createFromHexString(postId);
-      for (const colName of ministryCollections) {
-        try {
-          const col = await getCollection(colName);
-          if (!col) continue;
-          const doc = await col.findOne({ _id: applicationObjectId });
-          if (doc && doc.email) {
-            to = doc.email;
-            break;
-          }
-        } catch (e) {
-          // ignore per-collection errors and continue
-        }
-      }
-    } catch (e) {
-      console.warn("approve: ministry fallback lookup failed", e);
-    }
-  }
-  const applicationDescription = formData.get("applicationDescription");
-
   const validatedFields = UserApplicationSchema.safeParse({
     appName,
     nationalId,
