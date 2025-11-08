@@ -11,7 +11,6 @@ import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import nodemailer from "nodemailer";
 
 //User application server action
 export async function createApplication(state, formData) {
