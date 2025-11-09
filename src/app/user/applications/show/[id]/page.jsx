@@ -2,7 +2,7 @@ import PostCard from "@/components/post-card";
 import { getCollection } from "@/lib/db";
 import { ObjectId } from "mongodb";
 
-export default async function Show({ params }) {
+export default async function Show({ params, post = {} }) {
   //get route params
   const { id } = await params;
 
@@ -25,11 +25,9 @@ export default async function Show({ params }) {
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <p style={{ fontSize: 40, fontFamily: "initial" }}>Application Details</p>
-      {post ? (
+      {post ?
         <PostCard post={post} />
-      ) : (
-        <p style={{ fontSize: 60 }}>Application Not found!</p>
-      )}
+      : <p style={{ fontSize: 60 }}>Application Not found!</p>}
     </div>
   );
 }

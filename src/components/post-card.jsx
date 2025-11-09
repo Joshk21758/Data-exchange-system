@@ -1,4 +1,4 @@
-export default function PostCard() {
+export default function PostCard({ post = {} }) {
   return (
     <div className="border-class">
       <p style={{ fontSize: 20 }}>Applicant Name</p>
