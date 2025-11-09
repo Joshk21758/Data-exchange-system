@@ -37,6 +37,7 @@ export const AdminRegisterSchema = z
   .object({
     name: z.string().trim(),
     role: z.string().trim(),
+    ministry: z.string().trim(),
     email: z.string().email().trim(),
     password: z
       .string()

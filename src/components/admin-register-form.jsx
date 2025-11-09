@@ -45,6 +45,27 @@ export default function AdminRegisterForm() {
               )}
             </div>
             <div className="grid gap-2">
+              <Label>Select a Ministry</Label>
+              <select
+                name="ministry"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
+              >
+                <option value="Minisrty of Foreign Affairs">
+                  Ministry of Foreign Affairs
+                </option>
+                <option value="Ministry of Home Affairs">
+                  Ministry of Home Affairs
+                </option>
+                <option value="Ministry of Education">
+                  Ministry of Education
+                </option>
+                <option value="Ministry of Health">Ministry of Health</option>
+              </select>
+              {state?.errors?.ministry && (
+                <p className="text-sm text-red-600">{state.errors.ministry}</p>
+              )}
+            </div>
+            <div className="grid gap-2">
               <Label>Email</Label>
               <input
                 name="email"
