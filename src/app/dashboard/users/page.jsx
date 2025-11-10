@@ -1,3 +1,4 @@
+import { updateRole } from "@/app/actions/roles";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,8 +10,6 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -67,10 +66,24 @@ export default async function UsersPage() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuLabel>Change Role</DropdownMenuLabel>
-                      <DropdownMenuItem>Auditor</DropdownMenuItem>
-                      <DropdownMenuItem>Security Analyst</DropdownMenuItem>
-                      <DropdownMenuItem>Super Admin</DropdownMenuItem>
+                      <form action={updateRole}>
+                        <input
+                          type="hidden"
+                          name="userId"
+                          defaultValue={user?._id.toString()}
+                        />
+                        <select
+                          name="role"
+                          className="flex cursor-default items-center justify-center py-1"
+                        >
+                          <option value="security analyst">
+                            Security Analyst
+                          </option>
+                          <option value="super admin">Super admin</option>
+                          <option value="auditor">Auditor</option>
+                          <button>Save</button>
+                        </select>
+                      </form>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
