@@ -46,6 +46,8 @@ export default async function UsersPage() {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Ministry</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
               </TableHead>
@@ -57,6 +59,7 @@ export default async function UsersPage() {
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.role}</TableCell>
+                <TableCell>{user.ministry}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -74,14 +77,13 @@ export default async function UsersPage() {
                         />
                         <select
                           name="role"
-                          className="flex cursor-default items-center justify-center py-1"
-                          value="Assign Role"
+                          className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
                         >
-                          <option value="security analyst">
+                          <option value="Security Analyst">
                             Security Analyst
                           </option>
-                          <option value="super admin">Super admin</option>
-                          <option value="auditor">Auditor</option>
+                          <option value="Super admin">Super admin</option>
+                          <option value="Auditor">Auditor</option>
                         </select>
                         <button>Save</button>
                       </form>
