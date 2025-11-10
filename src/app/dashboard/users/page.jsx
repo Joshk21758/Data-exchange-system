@@ -75,14 +75,15 @@ export default async function UsersPage() {
                         <select
                           name="role"
                           className="flex cursor-default items-center justify-center py-1"
+                          defaultValue="Assign Role"
                         >
                           <option value="security analyst">
                             Security Analyst
                           </option>
                           <option value="super admin">Super admin</option>
                           <option value="auditor">Auditor</option>
-                          <button>Save</button>
                         </select>
+                        <button>Save</button>
                       </form>
                     </DropdownMenuContent>
                   </DropdownMenu>
