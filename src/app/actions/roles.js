@@ -26,16 +26,20 @@ export default async function updateRole(formData) {
   });
 
   //update the role
-  await adminUserCollection.findOneAndUpdate(
-    {
-      _id: adminUser._id,
-    },
-    {
-      $set: {
-        role: role,
+  try {
+    await adminUserCollection.findOneAndUpdate(
+      {
+        _id: user._id,
       },
-    }
-  );
+      {
+        $set: {
+          role: role,
+        },
+      }
+    );
+  } catch (error) {
+    console.log("Error updating role");
+  }
 
   //revalidate
   revalidatePath("/dashboard/users");

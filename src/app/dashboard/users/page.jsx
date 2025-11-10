@@ -1,4 +1,4 @@
-import { updateRole } from "@/app/actions/roles";
+import updateRole from "@/app/actions/roles";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -75,7 +75,7 @@ export default async function UsersPage() {
                         <select
                           name="role"
                           className="flex cursor-default items-center justify-center py-1"
-                          defaultValue="Assign Role"
+                          value="Assign Role"
                         >
                           <option value="security analyst">
                             Security Analyst
