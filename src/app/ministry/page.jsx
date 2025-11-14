@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Landmark, Briefcase, HeartPulse, Home } from "lucide-react";
 import { AppLogo } from "@/components/icons";
-import SuccessMessage from "@/components/pop-up";
+import { SuccessMessage } from "@/components/pop-up";
 
 const ministries = [
   {
