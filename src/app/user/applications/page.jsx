@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/table";
 import { getCollection } from "@/lib/db";
 import { deleteApplication } from "@/app/actions/posts";
-import { SuccessMessage } from "@/components/pop-up";
+import SuccessMessage from "@/components/pop-up";
 
 export default async function UserApplicationsPage() {
   //get application collection
