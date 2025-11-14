@@ -26,8 +26,6 @@ import {
 import { getCollection } from "@/lib/db";
 import { deleteApplication } from "@/app/actions/posts";
 import SuccessMessage from "@/components/pop-up";
-import { Suspense } from "react";
-import Loading from "@/app/Loading";
 
 export default async function UserApplicationsPage() {
   //get application collection
