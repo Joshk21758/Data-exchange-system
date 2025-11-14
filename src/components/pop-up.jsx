@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
-export function SuccessMessage() {
+export default function SuccessMessage() {
   const searchParams = useSearchParams();
   const status = searchParams.get("status");
   const [hasShown, setHasShown] = useState(false);
