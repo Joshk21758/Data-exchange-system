@@ -122,9 +122,7 @@ export default async function UserApplicationsPage() {
           </Table>
         </CardContent>
       </Card>
-      <Suspense fallback={<Loading />}>
-        <SuccessMessage />
-      </Suspense>
+      <SuccessMessage />
     </div>
   );
 }

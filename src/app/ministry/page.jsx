@@ -64,9 +64,7 @@ export default function MinistryPage() {
           <Link href="/" className="text-sm text-primary hover:underline">
             Back to Home
           </Link>
-          <Suspense fallback={<Loading />}>
-            <SuccessMessage />
-          </Suspense>
+          <SuccessMessage />
         </div>
       </div>
     </div>
