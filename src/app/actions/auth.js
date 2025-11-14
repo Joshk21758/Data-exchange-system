@@ -11,7 +11,6 @@ import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { createSession } from "@/lib/sessions";
 import { cookies } from "next/headers";
-import { errors } from "jose";
 
 //User Register server actions
 export async function register(state, formData) {
@@ -31,7 +30,7 @@ export async function register(state, formData) {
   }
 
   //Extract form data
-  const { email, password } = validatedFields.data;
+  const { fullName, email, password } = validatedFields.data;
 
   //check if user collection exists
   const userCollection = await getCollection("user");
@@ -60,6 +59,7 @@ export async function register(state, formData) {
   let savedUser;
   try {
     savedUser = await userCollection.insertOne({
+      fullName,
       email,
       password: hashedPassword,
     });
