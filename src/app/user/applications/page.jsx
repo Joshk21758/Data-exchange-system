@@ -26,6 +26,7 @@ import {
 import { getCollection } from "@/lib/db";
 import { deleteApplication } from "@/app/actions/posts";
 import SuccessMessage from "@/components/pop-up";
+import { Suspense } from "react";
 
 export default async function UserApplicationsPage() {
   //get application collection
@@ -120,7 +121,9 @@ export default async function UserApplicationsPage() {
           </Table>
         </CardContent>
       </Card>
-      <SuccessMessage />
+      <Suspense>
+        <SuccessMessage />
+      </Suspense>
     </div>
   );
 }

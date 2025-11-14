@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Landmark, Briefcase, HeartPulse, Home } from "lucide-react";
 import { AppLogo } from "@/components/icons";
 import SuccessMessage from "@/components/pop-up";
+import { Suspense } from "react";
 
 const ministries = [
   {
@@ -62,7 +63,9 @@ export default function MinistryPage() {
           <Link href="/" className="text-sm text-primary hover:underline">
             Back to Home
           </Link>
-          <SuccessMessage />
+          <Suspense>
+            <SuccessMessage />
+          </Suspense>
         </div>
       </div>
     </div>
