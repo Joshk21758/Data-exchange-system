@@ -13,7 +13,7 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { logout } from "@/app/actions/auth";
 import { getCollection } from "@/lib/db";
 
-export default async function AdminUserNav() {
+export async function AdminUserNav() {
   //get admin user collection
   const adminUserCollection = await getCollection("admin-user");
   const amdinUsers = await adminUserCollection.find().toArray();
