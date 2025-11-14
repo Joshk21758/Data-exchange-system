@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./theme-toggle";
-import { AdminUserNav } from "./admin-user-nav";
+import AdminUserNav from "./admin-user-nav";
 
 export default function MinistryHeader() {
   return (
