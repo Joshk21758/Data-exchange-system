@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Bell, Users, History } from "lucide-react";
+import { Users } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,8 +9,8 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { UserNav } from "@/components/layout/user-nav";
 import { ThemeToggle } from "./theme-toggle";
+import { AdminUserNav } from "./admin-user-nav";
 
 export default function MinistryHeader() {
   return (
@@ -40,7 +40,7 @@ export default function MinistryHeader() {
         {/* Search could go here */}
       </div>
       <ThemeToggle />
-      <UserNav />
+      <AdminUserNav />
     </header>
   );
 }

@@ -13,10 +13,10 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { logout } from "@/app/actions/auth";
 import { getCollection } from "@/lib/db";
 
-export default async function UserNav() {
-  //get user collection
-  const userCollection = await getCollection("user");
-  const users = await userCollection.find().toArray();
+export default async function AdminUserNav() {
+  //get admin user collection
+  const adminUserCollection = await getCollection("admin-user");
+  const amdinUsers = await adminUserCollection.find().toArray();
   const userAvatar = PlaceHolderImages.find((img) => img.id === "user-avatar");
 
   return (
@@ -40,9 +40,9 @@ export default async function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            {users.map((user) => (
+            {amdinUsers.map((user) => (
               <p key={user._id} className="text-sm font-medium leading-none">
-                {user.fullName}
+                {user.name}
               </p>
             ))}
           </div>
