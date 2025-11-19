@@ -8,6 +8,9 @@ import { redirect } from "next/navigation";
 
 //Assign role server action
 export default async function updateRole(formData) {
+  //Simulate async delay
+  await new Promise((resolve) => setTimeout(resolve, 4000));
+
   //check if user is authenticated
   const user = await authUser();
   if (!user) {

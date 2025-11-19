@@ -14,6 +14,9 @@ import { redirect } from "next/navigation";
 
 //User application server action
 export async function createApplication(state, formData) {
+  //Simulate async delay
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   //check if user is authenticated
   const user = await authUser();
   if (!user) {
@@ -95,6 +98,9 @@ export async function createApplication(state, formData) {
 
 //Update user application server action
 export async function updateApplication(state, formData) {
+  //Simulate async delay
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   //check if user is authenticated
   const user = await authUser();
   if (!user) {
@@ -223,6 +229,9 @@ export async function updateApplication(state, formData) {
 
 //Delete user application server action
 export async function deleteApplication(formData) {
+  //Simulate async delay
+  await new Promise((resolve) => setTimeout(resolve, 4000));
+
   //check if user is authenticated
   const user = await authUser();
   if (!user) {
@@ -284,6 +293,9 @@ export async function deleteApplication(formData) {
 
 //Data Request server action
 export async function createRequestForm(state, formData) {
+  //Simulate async delay
+  await new Promise((resolve) => setTimeout(resolve, 4000));
+
   //check if admin is authenticated
   const user = await authUser();
   if (!user) {
