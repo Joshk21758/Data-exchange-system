@@ -145,7 +145,6 @@ export async function adminRegister(state, formData) {
   const validatedFields = AdminRegisterSchema.safeParse({
     name: formData.get("name"),
     role: formData.get("role"),
-    ministry: formData.get("ministry"),
     email: formData.get("email"),
     password: formData.get("password"),
     confirmPassword: formData.get("confirmPassword"),
@@ -159,7 +158,7 @@ export async function adminRegister(state, formData) {
   }
 
   //Extract form data (include role)
-  const { name, role, ministry, email, password } = validatedFields.data;
+  const { name, role, email, password } = validatedFields.data;
 
   //check if user collection exists
   const adminUserCollection = await getCollection("admin-user");
@@ -190,7 +189,6 @@ export async function adminRegister(state, formData) {
     adminUser = await adminUserCollection.insertOne({
       name,
       role,
-      ministry,
       email,
       password: hashedPassword,
     });
@@ -202,20 +200,7 @@ export async function adminRegister(state, formData) {
   await createSession(adminUser.insertedId);
 
   //redirect
-  if (ministry === "Ministry of Foreign Affairs") {
-    redirect("/ministry/foreignaffairs");
-  }
-  if (ministry === "Ministry of Home Affairs") {
-    redirect("/ministry/homeaffairs");
-  }
-  if (ministry === "Ministry of Health") {
-    redirect("/ministry/health");
-  }
-  if (ministry === "Ministry of Education") {
-    redirect("/ministry/education");
-  } else {
-    redirect("/ministry");
-  }
+  redirect("/admin/dashboard");
 }
 
 //Admin Login server action
@@ -270,5 +255,5 @@ export async function adminLogin(state, formData) {
   await createSession(adminUser._id);
 
   //redirect
-  redirect("/ministry");
+  redirect("/admin/dashboard");
 }

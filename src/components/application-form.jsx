@@ -61,31 +61,22 @@ export function ApplicationForm({ handler, post }) {
           )}
         </div>
         <div className="grid gap-3">
-          <Label>Document Type</Label>
-          <input
+          <Label>Permit Type</Label>
+          <select
             name="applicationType"
-            type="text"
-            placeholder="e.g., Passport Renewal, Visa Application"
-            className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
-          />
+            defaultValue="Construction"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg"
+          >
+            <option value="Construction">Construction</option>
+            <option value="Community-event">Community-event</option>
+            <option value="Business">Business</option>
+          </select>
           {state?.errors?.applicationType && (
             <p className="text-sm text-red-600">
               {state.errors.applicationType}
             </p>
           )}
         </div>
-      </div>
-      <div className="grid gap-3">
-        <Label>Select a Ministry</Label>
-        <input
-          name="ministry"
-          type="text"
-          placeholder="e.g., Ministry of Foreign Affairs, Ministry of Health..."
-          className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 flex cursor-default items-center justify-center py-1"
-        />
-        {state?.errors?.ministry && (
-          <p className="text-sm text-red-600">{state.errors.ministry}</p>
-        )}
       </div>
       <div className="grid gap-3">
         <Label>Application Description</Label>

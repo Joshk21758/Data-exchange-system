@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { AppLogo } from "@/components/icons";
-import UserNav from "@/components/layout/user-nav";
+import AdminUserNav from "./admin-user-nav";
 
-export default function UserHeader() {
+export default function AdminHeader() {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:px-6">
       <Link href="/" className="flex items-center gap-2 font-semibold">
@@ -12,7 +12,7 @@ export default function UserHeader() {
       <div className="relative ml-auto flex-1 md:grow-0">
         {/* Search could go here */}
       </div>
-      <UserNav />
+      <AdminUserNav />
     </header>
   );
 }

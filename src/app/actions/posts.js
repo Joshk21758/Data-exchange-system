@@ -2,11 +2,7 @@
 
 import { authUser } from "@/lib/authUser";
 import { getCollection } from "@/lib/db";
-import {
-  DataRequestSchema,
-  UserApplicationSchema,
-  NewPasswordSchema,
-} from "@/lib/schema";
+import { UserApplicationSchema, NewPasswordSchema } from "@/lib/schema";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
@@ -29,7 +25,6 @@ export async function createApplication(state, formData) {
   const address = formData.get("address");
   const email = formData.get("email");
   const applicationType = formData.get("applicationType");
-  const ministry = formData.get("ministry");
   const applicationDescription = formData.get("applicationDescription");
 
   const validatedFields = UserApplicationSchema.safeParse({
@@ -38,7 +33,6 @@ export async function createApplication(state, formData) {
     address,
     email,
     applicationType,
-    ministry,
     applicationDescription,
   });
 
@@ -49,51 +43,25 @@ export async function createApplication(state, formData) {
     };
   }
 
-  const applicationData = {
-    appName: validatedFields.data.appName,
-    nationalId: validatedFields.data.nationalId,
-    address: validatedFields.data.address,
-    email: validatedFields.data.email,
-    applicationType: validatedFields.data.applicationType,
-    ministry: ministry,
-    applicationDescription: validatedFields.data.applicationDescription,
-    userId: ObjectId.createFromHexString(user.userId),
-  };
-
+  //Save post instance to Db
+  const postCollection = await getCollection("applications");
+  let post;
   try {
-    // Save to the general 'applications' collection
-    const applicationsCollection = await getCollection("applications");
-    await applicationsCollection.insertOne(applicationData);
-
-    // Determine and save to the ministry-specific collection
-    let ministryCollectionName;
-    if (ministry === "Ministry of Home Affairs") {
-      ministryCollectionName = "home-affairs-collection";
-    } else if (ministry === "Ministry of Foreign Affairs") {
-      ministryCollectionName = "foreign-affairs-collection";
-    } else if (ministry === "Ministry of Health") {
-      ministryCollectionName = "health-collection";
-    } else if (ministry === "Ministry of Education") {
-      ministryCollectionName = "education-collection";
-    }
-
-    if (ministryCollectionName) {
-      const ministryCollection = await getCollection(ministryCollectionName);
-      await ministryCollection.insertOne(applicationData);
-    }
+    post = await postCollection.insertOne({
+      appName: validatedFields.data.appName,
+      nationalId: validatedFields.data.nationalId,
+      address: validatedFields.data.address,
+      email: validatedFields.data.email,
+      applicationType: validatedFields.data.applicationType,
+      applicationDescription: validatedFields.data.applicationDescription,
+      userId: ObjectId.createFromHexString(user.userId),
+    });
   } catch (error) {
-    console.log("Failed to save application to DB", error);
-    // Optionally, return an error state to the UI
-    return {
-      message: "Database error: Failed to save application.",
-    };
+    console.log(error);
   }
 
-  //query params
-  const successUrl = `/user/applications?success=true`;
-
   //redirect
-  redirect(successUrl);
+  redirect("/user/dashboard?success=true");
 }
 
 //Update user application server action
@@ -113,7 +81,6 @@ export async function updateApplication(state, formData) {
   const address = formData.get("address");
   const email = formData.get("email");
   const applicationType = formData.get("applicationType");
-  const ministry = formData.get("ministry");
   const applicationDescription = formData.get("applicationDescription");
   const postId = formData.get("postId");
 
@@ -129,7 +96,6 @@ export async function updateApplication(state, formData) {
     address,
     email,
     applicationType,
-    ministry,
     applicationDescription,
   });
 
@@ -140,91 +106,28 @@ export async function updateApplication(state, formData) {
     };
   }
 
-  const applicationCollection = await getCollection("applications");
-  const applicationObjectId = ObjectId.createFromHexString(postId);
-
-  // Find the original post to get the old ministry
-  const originalPost = await applicationCollection.findOne({
-    _id: applicationObjectId,
+  //find the post
+  const postCollection = await getCollection("applications");
+  const post = await postCollection.findOne({
+    _id: ObjectId.createFromHexString(postId),
   });
 
-  if (!originalPost) {
-    return { message: "Application not found." };
-  }
-
-  const oldMinistry = originalPost.ministry;
-  const newMinistry = validatedFields.data.ministry;
-
-  const updatedApplicationData = {
-    appName: validatedFields.data.appName,
-    nationalId: validatedFields.data.nationalId,
-    address: validatedFields.data.address,
-    email: validatedFields.data.email,
-    applicationType: validatedFields.data.applicationType,
-    ministry: newMinistry,
-    applicationDescription: validatedFields.data.applicationDescription,
-  };
-
-  try {
-    //  Update the document in the main 'applications' collection
-    await applicationCollection.updateOne(
-      { _id: applicationObjectId },
-      { $set: updatedApplicationData }
-    );
-
-    const getMinistryCollectionName = (ministry) => {
-      if (ministry === "Ministry of Home Affairs")
-        return "home-affairs-collection";
-      if (ministry === "Ministry of Foreign Affairs")
-        return "foreign-affairs-collection";
-      if (ministry === "Ministry of Health") return "health-collection";
-      if (ministry === "Ministry of Education") return "education-collection";
-      return null;
-    };
-
-    const oldMinistryCollectionName = getMinistryCollectionName(oldMinistry);
-    const newMinistryCollectionName = getMinistryCollectionName(newMinistry);
-
-    // Handle ministry collection changes
-    if (
-      oldMinistryCollectionName &&
-      oldMinistryCollectionName !== newMinistryCollectionName
-    ) {
-      // Ministry has changed, so delete from the old ministry collection
-      const oldMinistryCollection = await getCollection(
-        oldMinistryCollectionName
-      );
-      await oldMinistryCollection.deleteOne({ _id: applicationObjectId });
-    }
-
-    if (newMinistryCollectionName) {
-      const newMinistryCollection = await getCollection(
-        newMinistryCollectionName
-      );
-      if (oldMinistryCollectionName !== newMinistryCollectionName) {
-        // Insert into the new ministry collection
-        await newMinistryCollection.insertOne({
-          ...updatedApplicationData,
-          _id: applicationObjectId, // Ensure the _id is the same
-          userId: originalPost.userId,
-        });
-      } else {
-        // Ministry is the same, so update the document in the ministry collection
-        await newMinistryCollection.updateOne(
-          { _id: applicationObjectId },
-          { $set: updatedApplicationData }
-        );
-      }
-    }
-  } catch (error) {
-    console.log("Failed to update application in DB", error);
-    return {
-      message: "Database error: Failed to update application.",
-    };
-  }
-
-  // redirect
-  redirect("/user/applications");
+  //update post
+  (await postCollection.findOneAndUpdate(
+    { _id: post._id },
+    {
+      $set: {
+        appName: validatedFields.data.appName,
+        nationalId: validatedFields.data.nationalId,
+        address: validatedFields.data.address,
+        email: validatedFields.data.email,
+        applicationType: validatedFields.data.applicationType,
+        applicationDescription: validatedFields.data.applicationDescription,
+      },
+    },
+  ),
+    // redirect
+    redirect("/user/applications"));
 }
 
 //Delete user application server action
@@ -245,112 +148,17 @@ export async function deleteApplication(formData) {
     return;
   }
 
-  const applicationObjectId = ObjectId.createFromHexString(postId);
-  const applicationCollection = await getCollection("applications");
+  //find post to delete
+  const postCollection = await getCollection("applications");
+  const post = await postCollection.findOne({
+    _id: ObjectId.createFromHexString(formData.get("postId")),
+  });
 
-  try {
-    // Find the application to get ministry info before deleting
-    const applicationToDelete = await applicationCollection.findOne({
-      _id: applicationObjectId,
-    });
-
-    if (!applicationToDelete) {
-      console.log("Application to delete not found.");
-      revalidatePath("/user/applications");
-      return;
-    }
-
-    //  Delete from the main 'applications' collection
-    await applicationCollection.deleteOne({ _id: applicationObjectId });
-
-    //  Determine ministry collection and delete from it
-    const getMinistryCollectionName = (ministry) => {
-      if (ministry === "Ministry of Home Affairs")
-        return "home-affairs-collection";
-      if (ministry === "Ministry of Foreign Affairs")
-        return "foreign-affairs-collection";
-      if (ministry === "Ministry of Health") return "health-collection";
-      if (ministry === "Ministry of Education") return "education-collection";
-      return null;
-    };
-
-    const ministryCollectionName = getMinistryCollectionName(
-      applicationToDelete.ministry
-    );
-
-    if (ministryCollectionName) {
-      const ministryCollection = await getCollection(ministryCollectionName);
-      await ministryCollection.deleteOne({ _id: applicationObjectId });
-    }
-  } catch (error) {
-    console.error("Failed to delete application:", error);
-    // Optionally return an error state if the action hook expects it
-  }
+  //Delete the post
+  await postCollection.findOneAndDelete({ _id: post._id });
 
   //revalidate path
   revalidatePath("/user/applications");
-}
-
-//Data Request server action
-export async function createRequestForm(state, formData) {
-  //Simulate async delay
-  await new Promise((resolve) => setTimeout(resolve, 4000));
-
-  //check if admin is authenticated
-  const user = await authUser();
-  if (!user) {
-    redirect("/admin");
-  }
-
-  //Validate form data
-  const adminName = formData.get("adminName");
-  const department = formData.get("department");
-  const email = formData.get("email");
-  const appName = formData.get("appName");
-  const targetMinistry = formData.get("targetMinistry");
-  const dataRequested = formData.get("dataRequested");
-  const reason = formData.get("reason");
-
-  const validatedFields = DataRequestSchema.safeParse({
-    adminName,
-    department,
-    email,
-    appName,
-    targetMinistry,
-    dataRequested,
-    reason,
-  });
-
-  //check if validation is success
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
-  }
-
-  //Save application form to Db
-  const dataRequestCollection = await getCollection("data-requests");
-  let form;
-  try {
-    form = await dataRequestCollection.insertOne({
-      adminName: validatedFields.data.adminName,
-      department: validatedFields.data.department,
-      email: validatedFields.data.email,
-      appName: validatedFields.data.appName,
-      targetMinistry: targetMinistry,
-      dataRequested: validatedFields.data.dataRequested,
-      reason: validatedFields.data.reason,
-      userId: ObjectId.createFromHexString(user.userId),
-    });
-  } catch (error) {
-    console.log("Failed to save request form to DB");
-  }
-
-  //query params
-  const successUrl = `/ministry?success=true`;
-
-  //redirect
-  redirect(successUrl);
 }
 
 //New password server action
@@ -390,7 +198,7 @@ export async function newPasswordAction(state, formData) {
     const hashed = await bcrypt.hash(validated.data.newPass, 10);
     await userCollection.updateOne(
       { _id: user._id },
-      { $set: { password: hashed } }
+      { $set: { password: hashed } },
     );
   } catch (err) {
     console.error("Failed to update password:", err);

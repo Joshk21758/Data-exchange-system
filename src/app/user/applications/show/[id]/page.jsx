@@ -24,7 +24,9 @@ export default async function Show({ params }) {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <p style={{ fontSize: 40, fontFamily: "initial" }}>Application Details</p>
+      <p style={{ fontSize: 40, fontFamily: "sans-serif" }}>
+        Application Details
+      </p>
       {post ?
         <PostCard post={post} />
       : <p style={{ fontSize: 60 }}>Application Not found!</p>}

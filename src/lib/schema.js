@@ -37,7 +37,6 @@ export const AdminRegisterSchema = z
   .object({
     name: z.string().trim(),
     role: z.string().trim(),
-    ministry: z.string().trim(),
     email: z.string().email().trim(),
     password: z
       .string()
@@ -57,27 +56,10 @@ export const UserApplicationSchema = z.object({
   address: z.string().trim(),
   email: z.string(),
   applicationType: z.string().trim(),
-  ministry: z.string().trim(),
   applicationDescription: z
     .string()
     .trim()
     .min(10, { message: "Description must be at least 10 characters long" }),
-});
-
-//DataReuest schema
-export const DataRequestSchema = z.object({
-  adminName: z.string(),
-  department: z.string().trim(),
-  email: z.string().trim(),
-  appName: z.string().trim(),
-  targetMinistry: z.string().trim(),
-  dataRequested: z.string().trim(),
-  reason: z
-    .string()
-    .min(20, {
-      message: "Reason for request must be at least 20 characters long",
-    })
-    .trim(),
 });
 
 //ForgotPassword schema

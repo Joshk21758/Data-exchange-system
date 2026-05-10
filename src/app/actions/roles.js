@@ -38,12 +38,12 @@ export default async function updateRole(formData) {
         $set: {
           role: role,
         },
-      }
+      },
     );
   } catch (error) {
     console.log("Error updating role");
   }
 
   //revalidate
-  revalidatePath("/dashboard/users");
+  revalidatePath("/admin/dashboard/users");
 }

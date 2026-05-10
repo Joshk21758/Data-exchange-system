@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { logout } from "@/app/actions/auth";
 import { getCollection } from "@/lib/db";
+import Link from "next/link";
 
 export default async function AdminUserNav() {
   //get admin user collection
@@ -52,6 +53,14 @@ export default async function AdminUserNav() {
           <form action={logout}>
             <button>Log out</button>
           </form>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href="/admin/dashboard/users"
+            className="text-sm font-medium hover:text-primary"
+          >
+            Manage users
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -2,7 +2,6 @@ import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -48,11 +47,11 @@ export default async function UserNav() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
+        <DropdownMenuLabel asChild>
           <form action={logout}>
-            <button>Log out</button>
+            <Button>Log out</Button>
           </form>
-        </DropdownMenuItem>
+        </DropdownMenuLabel>
       </DropdownMenuContent>
     </DropdownMenu>
   );

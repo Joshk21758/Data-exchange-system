@@ -25,8 +25,6 @@ import {
 } from "@/components/ui/table";
 import { getCollection } from "@/lib/db";
 import { deleteApplication } from "@/app/actions/posts";
-import SuccessMessage from "@/components/pop-up";
-import { Suspense } from "react";
 
 export default async function UserApplicationsPage() {
   //get application collection
@@ -51,79 +49,79 @@ export default async function UserApplicationsPage() {
           </Button>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Applicant name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Ministry</TableHead>
-                <TableHead>Submitted</TableHead>
-                <TableHead>
-                  <span className="sr-only">Actions</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {posts.map((post) => (
-                <TableRow key={post._id}>
-                  <TableCell>{post.appName}</TableCell>
-                  <TableCell>{post.applicationType}</TableCell>
-                  <TableCell>{post.email}</TableCell>
-                  <TableCell>{post.ministry}</TableCell>
-                  <TableCell>
-                    {post._id.getTimestamp().toLocaleString()}
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
-                          <Link
-                            href={`/user/applications/show/${post?._id.toString()}`}
-                          >
-                            View Details
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Link
-                            href={`/user/applications/edit/${post?._id.toString()}`}
-                          >
-                            Edit
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <form action={deleteApplication}>
-                            <input
-                              type="hidden"
-                              name="postId"
-                              defaultValue={post?._id.toString()}
-                            />
-                            <button>Cancel Application</button>
-                          </form>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+          {posts <= 0 ?
+            <p className="subTitle">You currently have no Applications.</p>
+          : <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Applicant name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Permit type</TableHead>
+                  <TableHead>Submitted</TableHead>
+                  <TableHead>
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {posts.map((post) => (
+                  <TableRow key={post._id}>
+                    <TableCell>{post.appName}</TableCell>
+                    <TableCell>{post.applicationType}</TableCell>
+                    <TableCell>{post.email}</TableCell>
+                    <TableCell>{post.applicationDescription}</TableCell>
+                    <TableCell>
+                      {post._id.getTimestamp().toLocaleString()}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            aria-haspopup="true"
+                            size="icon"
+                            variant="ghost"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Toggle menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuItem>
+                            <Link
+                              href={`/user/applications/show/${post?._id.toString()}`}
+                            >
+                              View Details
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Link
+                              href={`/user/applications/edit/${post?._id.toString()}`}
+                            >
+                              Edit
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <form action={deleteApplication}>
+                              <input
+                                type="hidden"
+                                name="postId"
+                                defaultValue={post?._id.toString()}
+                              />
+                              <button>Cancel Application</button>
+                            </form>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          }
         </CardContent>
       </Card>
-      <Suspense>
-        <SuccessMessage />
-      </Suspense>
     </div>
   );
 }

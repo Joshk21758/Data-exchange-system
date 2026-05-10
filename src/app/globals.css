@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 90 1% 90%;
-    --foreground: 222.2 47.4% 11.2%;
-    --card: 120 0% 100%;
-    --card-foreground: 120 47.4% 11.2%;
+    --background: 30 20% 98%;
+    --foreground: 20 50% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 50% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
-    --primary: 120 48% 48%;
+    --popover-foreground: 20 50% 10%;
+    --primary: 24 95% 53%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 92%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 0 0% 92%;
-    --muted-foreground: 222.2 47.4% 45%;
-    --accent: 174 100% 29%;
-    --accent-foreground: 0 0% 98%;
+    --secondary: 32 100% 92%;
+    --secondary-foreground: 24 95% 25%;
+    --muted: 30 10% 90%;
+    --muted-foreground: 25 10% 40%;
+    --accent: 32 100% 92%;
+    --accent-foreground: 24 95% 30%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 180 0% 89.8%;
-    --ring: 231 48% 48%;
+    --border: 25 20% 90%;
+    --input: 25 20% 90%;
+    --ring: 24 95% 53%;
     --radius: 0.5rem;
     --chart-1: 231 48% 48%;
     --chart-2: 174 100% 29%;
@@ -68,15 +68,25 @@
   }
 }
 
-.border-class {
-  height: 600px;
-  width: 650px;
-  border-radius: 30px;
-  margin-left: 40px;
-  box-shadow: 2px 4px 4px rgb(2, 115, 244);
-  margin-top: 30px;
-  padding-left: 15px;
-  padding-top: 10px;
-  color: rgb(0, 0, 0);
-  background-color: rgb(255, 255, 255);
+.subTitle {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+}
+
+.postCard {
+  height: 400px;
+  width: 630px;
+  padding: 20px;
+  border-radius: 15px;
+  border-color: #fd6100;
+  border-width: 2px;
+  border-style: solid;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 4px 4px -2px rgb(0 0 0 / 0.1);
 }
