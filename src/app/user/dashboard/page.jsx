@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import SuccessMessage from "@/components/pop-up";
 
 export default function UserDashboardPage() {
   return (
@@ -29,7 +28,6 @@ export default function UserDashboardPage() {
           </div>
         </CardContent>
       </Card>
-      <SuccessMessage />
     </div>
   );
 }
