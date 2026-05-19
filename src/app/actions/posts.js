@@ -87,6 +87,7 @@ export async function updateApplication(state, formData) {
   const address = formData.get("address");
   const email = formData.get("email");
   const applicationType = formData.get("applicationType");
+  const status = formData.get("status");
   const applicationDescription = formData.get("applicationDescription");
   const postId = formData.get("postId");
 
@@ -102,6 +103,7 @@ export async function updateApplication(state, formData) {
     address,
     email,
     applicationType,
+    status,
     applicationDescription,
   });
 
@@ -128,6 +130,7 @@ export async function updateApplication(state, formData) {
         address: validatedFields.data.address,
         email: validatedFields.data.email,
         applicationType: validatedFields.data.applicationType,
+        status: validatedFields.data.status,
         applicationDescription: validatedFields.data.applicationDescription,
       },
     },

@@ -57,7 +57,8 @@ export default async function UserApplicationsPage() {
                   <TableHead>Applicant name</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Email</TableHead>
-                  <TableHead>Permit type</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Description</TableHead>
                   <TableHead>Submitted</TableHead>
                   <TableHead>
                     <span className="sr-only">Actions</span>
@@ -70,6 +71,7 @@ export default async function UserApplicationsPage() {
                     <TableCell>{post.appName}</TableCell>
                     <TableCell>{post.applicationType}</TableCell>
                     <TableCell>{post.email}</TableCell>
+                    <TableCell>{post.status}</TableCell>
                     <TableCell>{post.applicationDescription}</TableCell>
                     <TableCell>
                       {post._id.getTimestamp().toLocaleString()}
