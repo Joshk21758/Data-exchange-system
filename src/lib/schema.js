@@ -56,6 +56,7 @@ export const UserApplicationSchema = z.object({
   address: z.string().trim(),
   email: z.string(),
   applicationType: z.string().trim(),
+  status: z.string(),
   applicationDescription: z
     .string()
     .trim()
@@ -67,7 +68,7 @@ export const ForgotPasswordSchema = z.object({
   email: z.string().trim(),
 });
 
-//CodeReset schema
+//CodeInput schema
 export const CodeResetSchema = z.object({
   code: z.number().min(6, { message: "Code must be 6 Digits long!" }),
 });
@@ -85,3 +86,10 @@ export const NewPasswordSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+//Feedback schema
+export const FeedbackSchema = z.object({
+  name: z.string().trim(),
+  email: z.string().trim(),
+  message: z.string().trim(),
+});

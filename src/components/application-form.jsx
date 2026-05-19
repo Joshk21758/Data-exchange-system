@@ -9,6 +9,7 @@ export function ApplicationForm({ handler, post }) {
   return (
     <form action={formAction} className="grid gap-6">
       <input type="hidden" name="postId" defaultValue={post?._id.toString()} />
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="grid gap-3">
           <Label>Applicant Name</Label>
@@ -76,6 +77,18 @@ export function ApplicationForm({ handler, post }) {
               {state.errors.applicationType}
             </p>
           )}
+          <div className="grid gap-3">
+            <Label>Application status</Label>
+            <input
+              name="status"
+              type="text"
+              defaultValue="Pending"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-5 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-bg sr-only"
+            />
+            {state?.errors?.status && (
+              <p className="text-sm text-red-600">{state.errors.status}</p>
+            )}
+          </div>
         </div>
       </div>
       <div className="grid gap-3">

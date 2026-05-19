@@ -7,6 +7,9 @@ import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
 
 //User application server action
 export async function createApplication(state, formData) {
@@ -25,6 +28,7 @@ export async function createApplication(state, formData) {
   const address = formData.get("address");
   const email = formData.get("email");
   const applicationType = formData.get("applicationType");
+  const status = formData.get("status");
   const applicationDescription = formData.get("applicationDescription");
 
   const validatedFields = UserApplicationSchema.safeParse({
@@ -33,6 +37,7 @@ export async function createApplication(state, formData) {
     address,
     email,
     applicationType,
+    status,
     applicationDescription,
   });
 
@@ -53,6 +58,7 @@ export async function createApplication(state, formData) {
       address: validatedFields.data.address,
       email: validatedFields.data.email,
       applicationType: validatedFields.data.applicationType,
+      status: validatedFields.data.status,
       applicationDescription: validatedFields.data.applicationDescription,
       userId: ObjectId.createFromHexString(user.userId),
     });
@@ -210,6 +216,70 @@ export async function newPasswordAction(state, formData) {
 }
 
 //Reset code server action
-export async function resetCodeAction() {
+export async function resetCodeAction(state, formData) {
+  const email = formData.get("email");
+
+  if (!email) {
+    return { message: "Email is required." };
+  }
+
+  // Generate a 6-digit code
+  const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // TODO: Save the reset code to your database (e.g., in a 'resetTokens' collection or the 'user' document)
+  const resetTokenCollection = await getCollection("resetPasswordTokens");
+  await resetTokenCollection.insertOne({
+    email: String(email).trim(),
+    resetCode,
+    resetCodeExpires: Date.now() + 10 * 60 * 1000,
+  });
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "Acme <onboarding@resend.dev>", // Replace with your verified sender domain
+      to: [email],
+      subject: "Your Password Reset Code",
+      html: `<p>Your password reset code is: <strong>${resetCode}</strong></p>`,
+    });
+
+    // redirect
+    if (data) {
+      redirect("/forgot-password/code-input");
+    }
+
+    if (error) {
+      console.error("Resend API Error:", error);
+      return { message: "Failed to send reset email." };
+    }
+
+    return { success: true, message: "Reset email sent successfully!" };
+  } catch (error) {
+    console.error("Unexpected Error:", error);
+    return { message: "An unexpected error occurred." };
+  }
+}
+
+//Verify reset code server action
+export async function verifyResetCodeAction(state, formData) {
+  const email = formData.get("email");
+  const resetCode = formData.get("resetCode");
+
+  if (!email || !resetCode) {
+    return { message: "Email and reset code are required." };
+  }
+
+  //check email and reset code in database
+  const resetTokenCollection = await getCollection("resetPasswordTokens");
+  const user = await resetTokenCollection.findOne({
+    email: String(email).trim(),
+    resetCode: String(resetCode).trim(),
+    resetCodeExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return { message: "Invalid or expired reset code." };
+  }
+
+  // redirect
   redirect("/forgot-password/new-password");
 }

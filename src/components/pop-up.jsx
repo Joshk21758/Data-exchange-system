@@ -2,8 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function SuccessMessage() {
   const searchParams = useSearchParams();
@@ -12,7 +11,7 @@ export default function SuccessMessage() {
   useEffect(() => {
     if (status === "success") {
       //Display toast message
-      toast.success("Application submitted successfully!", {
+      toast.success("Application submitted successfully! You'll recieve an email shortly.", {
         position: "bottom-right",
         autoClose: 3000,
       });
@@ -22,5 +21,5 @@ export default function SuccessMessage() {
     }
   }, [status]);
 
-  return <ToastContainer />;
+  return <Toaster />;
 }

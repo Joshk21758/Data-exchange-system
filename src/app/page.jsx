@@ -174,9 +174,9 @@ export default function HomePage() {
             </Link>
             <Link
               className="text-xs hover:underline underline-offset-4"
-              href="#"
+              href="/feedback"
             >
-              Privacy
+              Feedback
             </Link>
             <Link
               className="text-xs hover:underline underline-offset-4"
