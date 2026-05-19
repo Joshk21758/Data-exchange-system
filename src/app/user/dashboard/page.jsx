@@ -19,10 +19,10 @@ export default function UserDashboardPage() {
         <CardContent className="flex flex-col gap-4">
           <p>This is where your user-specific information will be displayed.</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Button asChild size="lg">
+            <Button size="lg">
               <Link href="/user/applications/new">New Application</Link>
             </Button>
-            <Button asChild variant="outline" size="lg">
+            <Button variant="outline" size="lg">
               <Link href="/user/applications">View My Applications</Link>
             </Button>
           </div>
