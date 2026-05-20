@@ -31,7 +31,7 @@ export async function approveForm(formData) {
 
   // Send email notification
   const { data, error } = await resend.emails.send({
-    from: "[EMAIL_ADDRESS]",
+    from: "MwansaKunda <noreply@mail.michelkunda.icuprojects.icu>",
     to: post.email,
     subject: "Application Approved",
     html: `<p>Your application status is: <strong>${post.status}</strong></p>`,
@@ -68,7 +68,7 @@ export async function rejectForm(formData) {
 
   // Send email notification
   const { data, error } = await resend.emails.send({
-    from: "[EMAIL_ADDRESS]",
+    from: "MwansaKunda <noreply@mail.michelkunda.icuprojects.icu>",
     to: post.email,
     subject: "Application Rejected",
     html: `<p>Your application status is: <strong>${post.status}</strong></p>`,

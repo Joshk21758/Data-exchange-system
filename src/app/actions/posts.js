@@ -239,7 +239,7 @@ export async function resetCodeAction(state, formData) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>", // Replace with your verified sender domain
+      from: "MwansaKunda <noreply@mail.michelkunda.icuprojects.icu>", // Replace with your verified sender domain
       to: [email],
       subject: "Your Password Reset Code",
       html: `<p>Your password reset code is: <strong>${resetCode}</strong></p>`,
