@@ -2,7 +2,6 @@
 
 import { getCollection } from "@/lib/db";
 import { ObjectId } from "mongodb";
-import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
@@ -42,10 +41,6 @@ export async function approveForm(formData) {
     console.error("Resend API Error:", error);
     return { message: "Failed to send application status email." };
   }
-
-  if (data) {
-    revalidatePath("/admin/dashboard");
-  }
 }
 
 // Reject server action
@@ -82,9 +77,5 @@ export async function rejectForm(formData) {
   if (error) {
     console.error("Resend API Error:", error);
     return { message: "Failed to send application rejected email." };
-  }
-
-  if (data) {
-    revalidatePath("/admin/dashboard");
   }
 }

@@ -245,8 +245,8 @@ export async function resetCodeAction(state, formData) {
       html: `<p>Your password reset code is: <strong>${resetCode}</strong></p>`,
     });
 
-    // redirect
     if (data) {
+      // Redirect
       redirect("/forgot-password/code-input");
     }
 
