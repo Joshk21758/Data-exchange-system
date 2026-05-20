@@ -1,18 +1,6 @@
-import { Link } from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-
 export default function TermsOfService() {
   return (
     <div className="p-10 m-10 border rounded-xl">
-      <div className="mb-4">
-        <Link href="/">
-          <Button variant="ghost" size="sm">
-            <ArrowRight className="mr-2 h-4 w-4 rotate-180" />
-            Back to Home
-          </Button>
-        </Link>
-      </div>
       <h1 className="text-4xl font-bold mb-4">Terms of Service</h1>
 
       <h3 className="text-2xl font-bold mb-2">1. Acceptance of Terms</h3>
