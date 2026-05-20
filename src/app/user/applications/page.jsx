@@ -49,7 +49,7 @@ export default async function UserApplicationsPage() {
           </Button>
         </CardHeader>
         <CardContent>
-          {posts <= 0 ?
+          {posts.length === 0 ?
             <p className="subTitle">You currently have no Applications.</p>
           : <Table>
               <TableHeader>

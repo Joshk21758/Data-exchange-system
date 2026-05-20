@@ -49,70 +49,75 @@ export default async function AdminDashboard() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Applicant name</TableHead>
-                <TableHead>Permit Type</TableHead>
-                <TableHead>email</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Submitted</TableHead>
-                <TableHead>
-                  <span className="sr-only">Actions</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {posts.map((post) => (
-                <TableRow key={post._id}>
-                  <TableCell className="font-medium">{post.appName}</TableCell>
-                  <TableCell>{post.applicationType}</TableCell>
-                  <TableCell>{post.email}</TableCell>
-                  <TableCell>{post.applicationDescription}</TableCell>
-                  <TableCell>
-                    {post._id.getTimestamp().toLocaleString()}
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
-                          <form action={approveForm}>
-                            <input
-                              type="hidden"
-                              name="postId"
-                              value={post._id.toString()}
-                            />
-                            <button type="submit">Approve</button>
-                          </form>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
-                          <form action={rejectForm}>
-                            <input
-                              type="hidden"
-                              name="postId"
-                              value={post._id.toString()}
-                            />
-                            <button type="submit">Reject</button>
-                          </form>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+          {posts.length === 0 ?
+            <div className="subTitle">No applications</div>
+          : <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Applicant name</TableHead>
+                  <TableHead>Permit Type</TableHead>
+                  <TableHead>email</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Submitted</TableHead>
+                  <TableHead>
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {posts.map((post) => (
+                  <TableRow key={post._id}>
+                    <TableCell className="font-medium">
+                      {post.appName}
+                    </TableCell>
+                    <TableCell>{post.applicationType}</TableCell>
+                    <TableCell>{post.email}</TableCell>
+                    <TableCell>{post.applicationDescription}</TableCell>
+                    <TableCell>
+                      {post._id.getTimestamp().toLocaleString()}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            aria-haspopup="true"
+                            size="icon"
+                            variant="ghost"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Toggle menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuItem>
+                            <form action={approveForm}>
+                              <input
+                                type="hidden"
+                                name="postId"
+                                value={post._id.toString()}
+                              />
+                              <button type="submit">Approve</button>
+                            </form>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-destructive">
+                            <form action={rejectForm}>
+                              <input
+                                type="hidden"
+                                name="postId"
+                                value={post._id.toString()}
+                              />
+                              <button type="submit">Reject</button>
+                            </form>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          }
         </CardContent>
       </Card>
       <div>
@@ -122,30 +127,33 @@ export default async function AdminDashboard() {
             <CardDescription>Review user feedback.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Message</TableHead>
-                  <TableHead>Submitted</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {feedbacks.map((feedback) => (
-                  <TableRow key={feedback._id}>
-                    <TableCell className="font-medium">
-                      {feedback.name}
-                    </TableCell>
-                    <TableCell>{feedback.feedback}</TableCell>
-                    <TableCell>{feedback.email}</TableCell>
-                    <TableCell>
-                      {feedback._id.getTimestamp().toLocaleString()}
-                    </TableCell>
+            {feedbacks.length === 0 ?
+              <div className="subTitle">No feedback</div>
+            : <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Message</TableHead>
+                    <TableHead>Submitted</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {feedbacks.map((feedback) => (
+                    <TableRow key={feedback._id}>
+                      <TableCell className="font-medium">
+                        {feedback.name}
+                      </TableCell>
+                      <TableCell>{feedback.feedback}</TableCell>
+                      <TableCell>{feedback.email}</TableCell>
+                      <TableCell>
+                        {feedback._id.getTimestamp().toLocaleString()}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            }
           </CardContent>
         </Card>
       </div>
