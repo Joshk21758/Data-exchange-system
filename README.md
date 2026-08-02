@@ -1,11 +1,11 @@
-# City Flow
+# City Flow Connect
 
 City Flow connect is a Next.js (App Router) web application for managing public "document applications" and workflows. Public users can submit applications for government documents. Review, approve/reject, and request data. Admins can manage users and roles. The app uses MongoDB for storage and Resend for SMTP email notifications.
 
 ## Features
 
 - Public user registration & login
-- Submit, edit, delete applications (central `applications` collection + per-ministry mirrors)
+- Submit, edit, delete applications
 - Admin review: approve/reject with email notifications
 - Password reset flow using email verification codes
 - Admin role management (Auditor, Security Analyst, Super Admin)
@@ -58,7 +58,7 @@ npm run dev
 ## How to use
 
 1. Register for an account
-2. Registering as an Adiministrator, do not use real credentials, as it is just for testing. The admin credentials are:
+2. Registering as an Adiministrator, do not use personal credentials, as it is just for testing. You can use fake credentials.
 3. Log in to your account
 4. Submit an application
 5. Track your application status
